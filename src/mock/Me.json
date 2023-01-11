@@ -1,0 +1,39 @@
+{
+  "data": {
+    "me": {
+      "firstName": "Brian",
+      "lastName": "Ronin",
+      "id": "yM5lKJx",
+      "userName": "BrianRonin",
+      "email": "01100010y@gmail.com",
+      "createdAt": "2023-01-02T23:16:56.554Z",
+      "posts": [
+        {
+          "title": "title",
+          "body": "body",
+          "createdAt": "2023-01-05T20:16:13.780Z",
+          "id": "znERcCB",
+          "comments": []
+        },
+        {
+          "title": "post do brian",
+          "body": "post do brian",
+          "createdAt": "2023-01-05T20:16:36.533Z",
+          "id": "_yKuW71",
+          "comments": [
+            { "id": "64" },
+            { "id": "65" },
+            { "id": "66" },
+            { "id": "67" },
+            { "id": "68" },
+            { "id": "69" },
+            { "id": "70" },
+            { "id": "71" },
+            { "id": "72" },
+            { "id": "78" }
+          ]
+        }
+      ]
+    }
+  }
+}
