@@ -5,17 +5,18 @@ import { MdAlternateEmail } from 'react-icons/md'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
 
-export type formLoginProps = {
-  errorMesage: any
-  onLogin: any
+export type formUserSettingsProps = {
+  errorMesage?: any
+  onLogin?: any
 }
 
-export const FormLogin = ({
+export const FormUserSettings = ({
   errorMesage,
   onLogin,
-}: formLoginProps) => {
+}: formUserSettingsProps) => {
   const [email, setEmail] = useState('')
-  const [password, setPassoword] = useState('')
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (
@@ -33,16 +34,23 @@ export const FormLogin = ({
     <S.Main onSubmit={handleSubmit}>
       <Input
         name='user-identifier'
-        label='e-mail'
+        label='nome'
+        onChange={(v) => setName(v)}
+        value={name}
+        type='name'
+      />
+      <Input
+        name='user-identifier'
+        label='email'
         onChange={(v) => setEmail(v)}
         value={email}
         icon={<MdAlternateEmail />}
         type='email'
       />
       <Input
-        name='user_passord'
-        label='Senha'
-        onChange={(v) => setPassoword(v)}
+        name='user-identifier'
+        label='Repita sua senha'
+        onChange={(v) => setPassword(v)}
         value={password}
         icon={<RiLockPasswordLine />}
         type='password'
@@ -53,8 +61,20 @@ export const FormLogin = ({
         </S.ErrorMessage>
       )}
       <S.ContainerButton>
-        <Button disabled={loading}>
-          {loading ? 'Aguarde...' : 'Entrar'}
+        <Button
+          disabled={loading}
+          meta={{ style: { width: '100%' } }}
+        >
+          {loading ? 'Aguarde...' : 'Salvar'}
+        </Button>
+        <Button
+          disabled={loading}
+          meta={{
+            style: { width: '100%' },
+            className: 'button-delete-user',
+          }}
+        >
+          Deletar usuário
         </Button>
       </S.ContainerButton>
     </S.Main>

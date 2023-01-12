@@ -2,8 +2,8 @@ import {
   Meta,
   Story,
 } from '@storybook/react/types-6-0'
-import { Base, baseProps } from './Base'
-import { mock_base } from './M.Base'
+import { Base, baseProps } from '.'
+import { mock_base } from './mock'
 
 export default {
   title: 'templates/base',

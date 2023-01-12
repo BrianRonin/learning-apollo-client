@@ -1,7 +1,8 @@
-import { Theme, useTheme } from '@emotion/react'
+import { useTheme } from '@emotion/react'
 import {
   ButtonHTMLAttributes,
   LegacyRef,
+  MouseEvent,
   ReactNode,
   useEffect,
   useState,
@@ -11,7 +12,9 @@ import * as S from './styles'
 type Settings = {
   children?: ReactNode
   disabled?: boolean
-  onClick?: () => void
+  onClick?: (
+    e: MouseEvent<HTMLButtonElement>,
+  ) => any
   icon?: ReactNode
   ref?: LegacyRef<HTMLButtonElement>
   custom?: buttonCustom
@@ -36,11 +39,9 @@ export type buttonProps = {
   isLoading?: boolean
 } & Settings
 
-export const Button = ({
-  isLoading = false,
-  loadingSettings = {},
-  ...userSettings
-}: buttonProps) => {
+export const Button = (
+  userSettings: buttonProps,
+) => {
   const theme = useTheme()
 
   const preset: Settings = {
@@ -59,35 +60,37 @@ export const Button = ({
     outline: false,
     disabled: false,
   }
-  const [settings, setSettings] = useState({
+
+  const [
+    {
+      children,
+      custom,
+      disabled,
+      icon,
+      iconDirection,
+      meta,
+      onClick,
+      outline,
+      ref,
+    },
+    setSettings,
+  ] = useState({
     ...preset,
     ...userSettings,
   })
 
   useEffect(() => {
-    isLoading
+    userSettings.isLoading
       ? setSettings({
           ...preset,
           ...userSettings,
-          ...loadingSettings,
         })
       : setSettings({
           ...preset,
           ...userSettings,
         })
-  }, [isLoading, theme])
-
-  const {
-    children,
-    custom,
-    disabled,
-    icon,
-    iconDirection,
-    meta,
-    onClick,
-    outline,
-    ref,
-  } = settings as Required<Settings>
+    return () => setSettings({})
+  }, [userSettings, theme])
 
   const onlyIcon =
     typeof children === 'undefined' &&
@@ -114,7 +117,7 @@ export const Button = ({
       onlyIcon={onlyIcon}
       custom={styles}
       outline={!!outline}
-      iconDirection={iconDirection}
+      iconDirection={iconDirection ?? 'left'}
       {...meta}
     >
       {!!icon && iconDirection === 'left' && icon}

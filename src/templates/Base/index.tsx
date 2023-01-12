@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { Sidebar } from '../../components/Sidebar/sidebar_0/sidebar'
 import { ToggleTheme } from '../../components/Switch/toggle_theme'
 import * as Me from '../../mock/Me.json'
-import * as S from './S.Base'
+import * as S from './styles'
 
 export type baseProps = {
   children: ReactNode
@@ -21,8 +21,20 @@ export const Base = ({ children }: baseProps) => {
             newTab: false,
           },
           {
-            link: '/create-post',
+            link: '/my-posts',
+            text: 'Meus posts',
+            visible: true,
+            newTab: false,
+          },
+          {
+            link: '/mutate-post',
             text: 'Criar post',
+            visible: true,
+            newTab: false,
+          },
+          {
+            link: '/login',
+            text: 'Login',
             visible: true,
             newTab: false,
           },
@@ -32,10 +44,16 @@ export const Base = ({ children }: baseProps) => {
             visible: true,
             newTab: false,
           },
+          {
+            link: '/logout',
+            text: 'Sair',
+            visible: true,
+            newTab: false,
+          },
         ]}
       />
       <ToggleTheme />
-      {children}
+      <S.Content>{children}</S.Content>
     </S.Main>
   )
 }

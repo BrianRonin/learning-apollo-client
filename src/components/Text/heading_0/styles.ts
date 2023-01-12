@@ -29,12 +29,8 @@ const mediaFont = (theme: Theme) => css`
   }
 `
 
-export const Title = styled.h1<props>`
-  ${({
-    theme,
-    size,
-    uppercase,
-  }) => css`
+export const Main = styled.h1<props>`
+  ${({ theme, size, uppercase }) => css`
     color: ${theme.colors.text[4]};
     text-transform: ${uppercase
       ? 'uppercase'

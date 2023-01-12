@@ -1,57 +1,50 @@
-import { Base } from '../templates/Base/Base'
+import { Base } from '../templates/Base'
 import MPosts from '../mock/Posts.json'
-import { mock_post_card } from '../components/Card/post_card/mock'
-import { PostCard } from '../components/Card/post_card'
-import { Post, User } from '../types/backend'
+import { Post } from '../types/backend'
 import { useEffect, useState } from 'react'
-import { Button } from '../components/Button/button_0'
+import { Posts as TemplatePosts } from '../templates/Posts'
 
 export default function Home() {
-  const [posts, setPosts] = useState<Post[]>()
-  const [indexPosts, setIndexPosts] = useState(3)
+  const [posts, setPosts] = useState<Post[]>([])
+  const [hasMore, setHasMore] = useState(false)
   const _posts = MPosts.data.posts
+  const initialPosts = 5
 
   useEffect(() => {
     loadMore()
+    if (_posts.length > initialPosts) {
+      setHasMore(true)
+    } else {
+      setHasMore(false)
+    }
     return () => {
-      setPosts(() => undefined)
+      setPosts(() => [])
     }
   }, [])
 
   const loadMore = () => {
     setPosts((p = []) => {
       const resolve = [...p]
-      for (let i = 0; i < 4; i++) {
-        resolve.push(
-          _posts[resolve.length + 1] as Post,
-        )
+      for (let i = 0; i < initialPosts; i++) {
+        if (_posts[resolve.length + 1]) {
+          resolve.push(
+            _posts[resolve.length + 1] as Post,
+          )
+        }
+        if (p.length + 1 === _posts.length) {
+          setHasMore(false)
+        }
       }
-      return resolve
+      return resolve as Post[]
     })
   }
   return (
     <Base>
-      <div
-        style={{
-          marginTop: '5rem',
-          marginBottom: '5rem',
-        }}
-      >
-        {posts &&
-          posts.map((post, i) => {
-            return (
-              <PostCard
-                key={i}
-                author={post.user as User}
-                createdAt={post.createdAt}
-                numberOfComments={
-                  post.comments.length
-                }
-                title={post.title}
-              ></PostCard>
-            )
-          })}
-      </div>
+      <TemplatePosts
+        loadMore={loadMore}
+        posts={posts}
+        hasMore={hasMore}
+      />
     </Base>
   )
 }

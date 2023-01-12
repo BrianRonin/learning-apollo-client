@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { buttonCustom } from '.'
-import { dynamicButton } from '../../../styles/css/dynamic-button'
+import { dynamicButton } from '../../../styles/css/dynamic-button.css'
 
 type mainProps = {
   onlyIcon: boolean

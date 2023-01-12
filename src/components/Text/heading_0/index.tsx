@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Title } from './styles'
+import * as S from './styles'
 
 export type HeadingProps = {
   children: ReactNode
@@ -15,12 +15,12 @@ export const Heading = ({
   uppercase = false,
 }: HeadingProps) => {
   return (
-    <Title
+    <S.Main
       as={as}
       size={size}
       uppercase={uppercase}
     >
       {children}
-    </Title>
+    </S.Main>
   )
 }

@@ -3,6 +3,7 @@ import {
   Global,
   useTheme,
 } from '@emotion/react'
+import { CSS_ScrollBar } from './css/scrollbar/scrollbar_1.css'
 
 export const GlobalStyles = () => {
   const theme = useTheme()
@@ -20,6 +21,7 @@ export const GlobalStyles = () => {
           font-size: 62.5%;
           font-family: 'Roboto', sans-serif;
           scroll-behavior: smooth;
+          ${CSS_ScrollBar(theme)}
         }
         body {
           background: ${theme.colors.bg[0]};

@@ -1,37 +1,31 @@
 import { buttonProps } from '.'
 import { css, Theme } from '@emotion/react'
 import styled from '@emotion/styled'
-import { inject_styles } from '../../../types/emotion'
-import { dynamicButton } from '../../../styles/css/dynamic-button'
+import { dynamicButton } from '../../../styles/css/dynamic-button.css'
 
-export const Main = styled.div<{
-  styles?: inject_styles
-}>`
-  ${({ theme, styles }) => css`
+export const Main = styled.div`
+  ${({ theme }) => css`
     display: flex;
-  --bg-icon: ${theme.colors.primary[2]};
-  --bg-text: ${theme.colors.bg[1]};
-  --bg-hover: var(--bg-icon);
-  --bg-icon-size: 30%;
-  --icon-size: 3rem;
-  --container-icon: calc(
-    var(--bg-icon-size) - var(--padding-x)
-  );
-  --mg-left-text: 34px;
-  --mg-left-icon: 0px;
-  --padding-x: 15px;
-  --padding-y: 10px;
-  --space-icon-size: calc(
-    var(--bg-icon-size) + var(--padding-x)
-  );
-    ${styles && styles(theme)}
+    --bg-icon: ${theme.colors.primary[2]};
+    --bg-text: ${theme.colors.bg[1]};
+    --bg-hover: var(--bg-icon);
+    --bg-icon-size: 30%;
+    --icon-size: 3rem;
+    --container-icon: calc(
+      var(--bg-icon-size) - var(--padding-x)
+    );
+    --mg-left-text: 34px;
+    --mg-left-icon: 0px;
+    --padding-x: 15px;
+    --padding-y: 10px;
+    --space-icon-size: calc(
+      var(--bg-icon-size) + var(--padding-x)
+    );
   `}
 `
 
-export const Button = styled.button<{
-  styles?: inject_styles
-}>`
-  ${({ theme, styles }) => css`
+export const Button = styled.button`
+  ${({ theme }) => css`
     ${dynamicButton()}
     position: relative;
     display: flex;
@@ -44,14 +38,13 @@ export const Button = styled.button<{
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    transition:
-      background-color 100ms ease-in-out,
+    transition: background-color 100ms ease-in-out,
       color 400ms ease-in-out;
     background: -webkit-linear-gradient(
       left,
       var(--bg-icon) var(--bg-icon-size),
       var(--bg-text) 0
-      );
+    );
     :hover {
       color: ${theme.colors.bg[0]};
     }
@@ -71,18 +64,14 @@ export const Button = styled.button<{
     :hover::after {
       left: 0;
     }
-    ${styles && styles(theme)}
   `}
 `
-export const Content = styled.div<{
-  styles?: inject_styles
-}>`
-  ${({ theme, styles }) => css`
+export const Content = styled.div`
+  ${({ theme }) => css`
     display: flex;
     position: relative;
     z-index: 5;
     align-items: center;
-    ${styles && styles(theme)}
   `}
 `
 export const IconContainer = styled.div`
@@ -99,11 +88,8 @@ export const IconContainer = styled.div`
     margin-left: var(--mg-left-icon));
   `}
 `
-export const TextContainer = styled.span<{
-  styles?: inject_styles
-}>`
-  ${({ theme, styles }) => css`
-    ${styles && styles(theme)}
+export const TextContainer = styled.span`
+  ${({ theme }) => css`
     justify-content: center;
     align-items: center;
     display: flex;

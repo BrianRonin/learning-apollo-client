@@ -20,14 +20,27 @@ export const Main = styled.div`
   `}
 `
 export const Heading = styled.h2`
-  ${({ theme }) => css``}
+  ${({ theme }) => css`
+    @media ${theme.media.lMedium} {
+      font-size: calc(
+        ${theme.fonts.sizes.medium} - 3px
+      );
+      margin: 0;
+      margin-bottom: ${theme.fonts.sizes.small};
+    }
+  `}
 `
 
 export const Meta = styled.div`
   ${({ theme }) => css`
     color: ${theme.colors.text[3]};
-    font-size: ${theme.fonts.sizes.small};
     margin: ${theme.spacings.tiny} 0;
+    font-size: ${theme.fonts.sizes.small};
+    @media ${theme.media.lMedium} {
+      font-size: calc(
+        ${theme.fonts.sizes.small} - 2px
+      );
+    }
   `}
 `
 
@@ -49,6 +62,17 @@ export const PostTools = styled.div`
         width: 10px;
         height: 10px;
         scale: 2.3;
+      }
+    }
+
+    @media ${theme.media.lMedium} {
+      margin: 0;
+      ${Button} {
+        > svg {
+          width: 8px;
+          height: 8px;
+          scale: 3;
+        }
       }
     }
   `}

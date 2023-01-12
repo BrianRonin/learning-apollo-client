@@ -50,14 +50,28 @@ export const FormPost = ({
       />
       <Input
         name='post-content'
-        label='Post Content'
+        label='Conteudo'
         value={newContent}
         onChange={(v) => setNewContent(v)}
         as='textarea'
       />
-      <Button disabled={saving} type='submit'>
-        {saving ? 'Salvando...' : 'Salvar'}
-      </Button>
+      <div
+        style={{
+          justifyContent: 'center',
+          display: 'flex',
+          marginTop: '5rem',
+        }}
+      >
+        <Button
+          disabled={saving}
+          meta={{
+            type: 'submit',
+            style: { width: '100%' },
+          }}
+        >
+          {saving ? 'Salvando...' : 'Salvar'}
+        </Button>
+      </div>
     </S.Main>
   )
 }

@@ -31,10 +31,12 @@ export const PostCard = ({
           <S.MetaItem>
             {author.firstName}
           </S.MetaItem>
+          <br />
           em
           <S.MetaItem>
             {dateFormatter(createdAt)}
           </S.MetaItem>
+          <br />
           Comments:
           <S.MetaItem>
             {numberOfComments}
