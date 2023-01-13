@@ -3,18 +3,18 @@ import { FormResetPassword } from '../../components/Form/form_reset_password'
 import { Base } from '../Base'
 import * as S from './styles'
 
-export type resetPasswordProps = { settings?: any }
+export type resetPasswordProps = {
+  settings?: any
+}
 
 export const ResetPassword = ({
   settings,
 }: resetPasswordProps) => {
   return (
-    <Base>
-      <S.Main>
-        <Container>
-          <FormResetPassword />
-        </Container>
-      </S.Main>
-    </Base>
+    <S.Main>
+      <Container>
+        <FormResetPassword />
+      </Container>
+    </S.Main>
   )
 }

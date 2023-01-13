@@ -211,11 +211,11 @@ export const DefaultTheme = {
     content: '80rem',
   },
   media: {
-    lSmallest: '(max-width: 320px)',
+    lSmallest: '(max-width: 360px)',
     lSmall: '(max-width: 576px)',
     lMedium: '(max-width: 768px)',
     lLarge: '(max-width: 992px)',
-    gSmallest: '(min-width: 320px)',
+    gSmallest: '(min-width: 360px)',
     gSmall: '(min-width: 576px)',
     gMedium: '(min-width: 768px)',
     gLarge: '(min-width: 992px)',

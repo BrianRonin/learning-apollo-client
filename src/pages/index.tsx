@@ -25,26 +25,26 @@ export default function Home() {
   const loadMore = () => {
     setPosts((p = []) => {
       const resolve = [...p]
-      for (let i = 0; i < initialPosts; i++) {
+      for (let i = 0; i <= initialPosts; i++) {
         if (_posts[resolve.length + 1]) {
           resolve.push(
             _posts[resolve.length + 1] as Post,
           )
         }
-        if (p.length + 1 === _posts.length) {
-          setHasMore(false)
-        }
+      }
+      console.log('resolve: ', resolve.length)
+      console.log('__: ', _posts.length)
+      if (resolve.length + 1 >= _posts.length) {
+        setHasMore(false)
       }
       return resolve as Post[]
     })
   }
   return (
-    <Base>
-      <TemplatePosts
-        loadMore={loadMore}
-        posts={posts}
-        hasMore={hasMore}
-      />
-    </Base>
+    <TemplatePosts
+      loadMore={loadMore}
+      posts={posts}
+      hasMore={hasMore}
+    />
   )
 }

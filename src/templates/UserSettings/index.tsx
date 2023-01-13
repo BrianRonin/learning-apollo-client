@@ -9,12 +9,10 @@ export const UserSettings = ({
   settings,
 }: userSettingsProps) => {
   return (
-    <Base>
-      <S.Main>
-        <Container>
-          <FormUserSettings />
-        </Container>
-      </S.Main>
-    </Base>
+    <S.Main>
+      <Container>
+        <FormUserSettings />
+      </Container>
+    </S.Main>
   )
 }

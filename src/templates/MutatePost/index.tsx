@@ -9,12 +9,10 @@ export const MutatePost = ({
   post,
 }: mutatePostProps) => {
   return (
-    <Base>
-      <S.Main>
-        <Container>
-          <FormPost />
-        </Container>
-      </S.Main>
-    </Base>
+    <S.Main>
+      <Container>
+        <FormPost />
+      </Container>
+    </S.Main>
   )
 }

@@ -98,7 +98,7 @@ export const Input = styled.input<StyledInputType>`
     }
     &:focus {
       border: ${theme.spacings.xxtiny} solid ${theme.colors.primary[3]};
-      box-shadow: 0px 0px ${theme.sizes.small}
+      box-shadow: 0px 0px 7px
       ${theme.name === 'default' ? theme.colors.white[10] : theme.colors.primary[1]};
     }
     &:focus

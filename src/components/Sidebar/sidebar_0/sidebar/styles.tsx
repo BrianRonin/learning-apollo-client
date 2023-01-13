@@ -1,5 +1,6 @@
 import { css, Theme } from '@emotion/react'
 import styled from '@emotion/styled'
+import { CSS_ScrollBar } from '../../../../styles/css/scrollbar/scrollbar_0.css'
 
 type typeSidebarBehavior = {
   sidebarVisible: boolean
@@ -24,9 +25,9 @@ const sidebarBehavior = ({
 }: typeSidebarBehavior) => css`
   left: ${sidebarVisible ? '-0rem' : '-30rem'};
   overflow-y: ${sidebarVisible
-    ? 'hidden'
-    : 'auto'};
-
+    ? 'auto'
+    : 'hidden'};
+  ${CSS_ScrollBar(theme)}
   @media ${theme.media.lMedium} {
     left: ${sidebarVisible ? '0' : '-32rem'};
   }
@@ -45,7 +46,6 @@ export const Main = styled.div<typeSidebarBehavior>`
     top: 0;
     left: -30rem;
     transition: all 300ms ease-in-out;
-    overflow-y: auto;
     ${sidebarBehavior({ theme, sidebarVisible })}
   `}
 `

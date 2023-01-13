@@ -7,6 +7,7 @@ export type navLinkProps = {
   link: string
   newTab?: boolean
   visible: boolean
+  loading: string
 }
 
 export const NavLink = ({
@@ -14,11 +15,15 @@ export const NavLink = ({
   link,
   newTab = false,
   visible = false,
+  loading,
 }: navLinkProps) => {
   const target = newTab ? '_blank' : '_self'
   return (
     <Link href={link} passHref legacyBehavior>
-      <S.Main target={target}>
+      <S.Main
+        loading={loading === link}
+        target={target}
+      >
         {!!visible && (
           <Typewriter words={[text]} />
         )}

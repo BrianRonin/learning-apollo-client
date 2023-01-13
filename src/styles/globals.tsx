@@ -16,6 +16,13 @@ export const GlobalStyles = () => {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
+          -webkit-tap-highlight-color: transparent;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
         }
         html {
           font-size: 62.5%;
@@ -36,6 +43,15 @@ export const GlobalStyles = () => {
         h6 {
           font-weight: 300;
           margin: ${theme.spacings.large} 0;
+        }
+
+        @media ${theme.media.lMedium} {
+          button {
+            font-size: 1em !important;
+          }
+          input {
+            font-size: 1em !important;
+          }
         }
       `}
     />

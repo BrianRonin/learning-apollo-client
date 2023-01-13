@@ -38,7 +38,10 @@ export const Posts = ({
         </S.ContainerButtonLoadMores>
       )}
       {!hasMore && (
-        <Heading as={'h3'}>Fim...</Heading>
+        <Heading as={'h3'} size='small'>
+          Parabéns você chegou ao fim do mar
+          profundo
+        </Heading>
       )}
     </S.Main>
   )

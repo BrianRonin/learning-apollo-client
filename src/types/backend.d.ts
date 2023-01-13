@@ -24,3 +24,8 @@ export type Post = {
   user: User
   comments: Comment[]
 }
+
+export type Auth = {
+  token: string
+  expires: string
+}

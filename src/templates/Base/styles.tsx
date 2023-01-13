@@ -11,7 +11,7 @@ export const Content = styled.div`
   ${({ theme }) => css`
     margin: 3rem 6rem;
     @media ${theme.media.lMedium} {
-      margin: 3rem 3.5rem;
+      margin: 0;
     }
   `}
 `

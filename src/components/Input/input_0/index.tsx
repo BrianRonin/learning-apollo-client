@@ -36,7 +36,8 @@ export const Input = ({
   meta,
 }: inputProps) => {
   const [hasValue, setHasValue] = useState(false)
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] =
+    useState(value)
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -72,7 +73,6 @@ export const Input = ({
           errorMessage={errorMessage}
           value={inputValue}
           as={as}
-          defaultValue={value}
           onChange={handleChange}
         />
         <S.Label htmlFor={name} element={as}>

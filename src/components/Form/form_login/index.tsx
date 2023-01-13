@@ -1,18 +1,21 @@
 import * as S from './styles'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { GiConfirmed } from 'react-icons/gi'
 import { MdAlternateEmail } from 'react-icons/md'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
+import { authVariables } from '../../../graphql/vars/auth'
+
+export type Credentials = {
+  email: string
+  password: string
+  name: string
+}
 
 export type formLoginProps = {
   errorMesage?: string
-  onLogin?: (
-    email: string,
-    password: string,
-    name: string,
-  ) => any
+  onLogin?: (credentials: Credentials) => any
   isNewUser?: boolean
 }
 
@@ -20,11 +23,14 @@ export const FormLogin = ({
   errorMesage,
   onLogin = () => undefined,
 }: formLoginProps) => {
-  const [email, setEmail] = useState('')
+  const auth = authVariables.use()
+
+  const [email, setEmail] = useState(auth.email)
   const [password, setPassoword] = useState('')
   const [confirmPassword, setConfirmPassoword] =
     useState('')
-  const [name, setName] = useState('')
+
+  const [name, setName] = useState(auth.name)
   const [loading, setLoading] = useState(false)
   const [isNewUser, setIsNewUser] =
     useState(false)
@@ -32,6 +38,10 @@ export const FormLogin = ({
     confirmPasswordError,
     setConfirmPasswordError,
   ] = useState('')
+
+  useEffect(() => {
+    console.log('auth: ', auth)
+  }, [])
 
   const handleSubmit = async (
     event: React.FormEvent,
@@ -46,35 +56,39 @@ export const FormLogin = ({
     }
     setLoading(true)
     if (onLogin) {
-      await onLogin(email, password, name)
+      const x = await onLogin({
+        email,
+        password,
+        name,
+      })
+      console.log(x)
     }
     setLoading(false)
   }
 
   return (
     <S.Main onSubmit={handleSubmit}>
-      <S.ContainerButton className='top-buttons'>
-        <Button
-          disabled={loading}
-          outline={!isNewUser}
-          onClick={(e) => {
-            e.preventDefault()
-            setIsNewUser(false)
-          }}
-        >
-          {loading ? 'Aguarde...' : 'Entrar'}
-        </Button>
-        <Button
-          onClick={(e) => {
-            e.preventDefault()
-            setIsNewUser(true)
-          }}
-          outline={isNewUser}
-        >
-          Criar conta
-        </Button>
-      </S.ContainerButton>
       <S.ContainerForm>
+        <S.ContainerButton className='top-buttons'>
+          <Button
+            outline={!isNewUser}
+            onClick={(e) => {
+              e.preventDefault()
+              setIsNewUser(false)
+            }}
+          >
+            {loading ? 'Aguarde...' : 'Entrar'}
+          </Button>
+          <Button
+            onClick={(e) => {
+              e.preventDefault()
+              setIsNewUser(true)
+            }}
+            outline={isNewUser}
+          >
+            Criar conta
+          </Button>
+        </S.ContainerButton>
         {isNewUser && (
           <Input
             name='user_name'

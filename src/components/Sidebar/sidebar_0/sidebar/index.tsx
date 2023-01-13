@@ -4,11 +4,16 @@ import {
   NavLink,
   navLinkProps,
 } from '../nav_link'
-import { MouseEvent, useState } from 'react'
+import {
+  MouseEvent,
+  useEffect,
+  useState,
+} from 'react'
 import { useTheme } from '@emotion/react'
 import { VscChromeClose } from 'react-icons/vsc'
 import { VscMenu } from 'react-icons/vsc'
 import { IconContext } from 'react-icons'
+import { Router } from 'next/router'
 
 export type sidebarProps = {
   links?: navLinkProps[]
@@ -24,12 +29,44 @@ export const Sidebar = ({
   const [sideBarVisible, setSideBarVisible] =
     useState(false)
   const theme = useTheme()
+  const [routeLoading, setRouteLoading] =
+    useState('')
+
   function handleButtonOpenCloseSidebar(
     e: MouseEvent,
   ) {
     e.preventDefault()
     setSideBarVisible((visible) => !visible)
   }
+
+  useEffect(() => {
+    Router.events.on('routeChangeStart', (e) =>
+      setRouteLoading(e),
+    )
+    Router.events.on(
+      'routeChangeComplete',
+      () =>
+        new Promise(() =>
+          setTimeout(
+            () => setRouteLoading(''),
+            300,
+          ),
+        ),
+    )
+    Router.events.on(
+      'routeChangeError',
+      (e) =>
+        new Promise(() =>
+          setTimeout(
+            () => setRouteLoading(''),
+            300,
+          ),
+        ),
+    )
+    return () => {
+      setRouteLoading('')
+    }
+  }, [Router.events])
 
   return (
     <>
@@ -77,6 +114,7 @@ export const Sidebar = ({
                 newTab={link.newTab}
                 text={link.text}
                 visible={sideBarVisible}
+                loading={routeLoading}
               />
             ))}
           </S.Nav>

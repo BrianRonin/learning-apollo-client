@@ -27,17 +27,17 @@ export const PostCard = ({
       <Container>
         <S.Heading>{title}</S.Heading>
         <S.Meta>
-          de
+          De:
           <S.MetaItem>
             {author.firstName}
           </S.MetaItem>
           <br />
-          em
+          Em:
           <S.MetaItem>
             {dateFormatter(createdAt)}
           </S.MetaItem>
           <br />
-          Comments:
+          Comentários:
           <S.MetaItem>
             {numberOfComments}
           </S.MetaItem>
