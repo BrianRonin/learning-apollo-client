@@ -20,19 +20,19 @@ import * as S from './styles'
 // }
 
 export const Login = () => {
-  const [me] = useMutation<User>(gql_me)
+  // const [me] = useMutation<User>(gql_me)
   const [auth, { loading, error, data }] =
     useMutation<Auth>(gql_auth, {
       errorPolicy: 'all',
-      onCompleted: async ({ token }) => {
-        // const {} = me({})
-        // authVariables.var = {
-        //   email: credentials.email,
-        //   isLogged: true,
-        //   name: credentials.name,
-        //   userId: 'ffff',
-        // }
-      },
+      // onCompleted: async ({ token }) => {
+      // const {} = me({})
+      // authVariables.var = {
+      //   email: credentials.email,
+      //   isLogged: true,
+      //   name: credentials.name,
+      //   userId: 'ffff',
+      // }
+      // },
     })
 
   const handleLogin = async (

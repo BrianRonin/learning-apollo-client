@@ -37,21 +37,23 @@ export class ApolloVariables<i> {
   }
 
   hydrate() {
-    const storeVariable = JSON.parse(
-      localStorage.getItem(this.name) ?? '',
-    )
-    switch (storeVariable) {
-      case !storeVariable:
-        this.reset()
-        break
-      case storeVariable === this.var:
-        break
-      default:
-        this.var = {
-          ...this.var,
-          ...storeVariable,
-        }
-        break
+    if (process.versions.browser) {
+      const storeVariable = JSON.parse(
+        localStorage.getItem(this.name) ?? '',
+      )
+      switch (storeVariable) {
+        case !storeVariable:
+          this.reset()
+          break
+        case storeVariable === this.var:
+          break
+        default:
+          this.var = {
+            ...this.var,
+            ...storeVariable,
+          }
+          break
+      }
     }
   }
 }

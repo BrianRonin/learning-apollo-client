@@ -6,6 +6,7 @@ import { MdAlternateEmail } from 'react-icons/md'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
 import { authVariables } from '../../../graphql/vars/auth'
+import { useIsMounted } from 'usehooks-ts'
 
 export type Credentials = {
   email: string
@@ -23,14 +24,16 @@ export const FormLogin = ({
   errorMesage,
   onLogin = () => undefined,
 }: formLoginProps) => {
-  const auth = authVariables.use()
+  const auth = useIsMounted()
+    ? authVariables.use()
+    : authVariables.schema
 
   const [email, setEmail] = useState(auth.email)
   const [password, setPassoword] = useState('')
   const [confirmPassword, setConfirmPassoword] =
     useState('')
 
-  const [name, setName] = useState(auth.name)
+  const [name, setName] = useState(auth.userName)
   const [loading, setLoading] = useState(false)
   const [isNewUser, setIsNewUser] =
     useState(false)
