@@ -1,4 +1,8 @@
-import { useMutation } from '@apollo/client'
+import {
+  ApolloError,
+  useLazyQuery,
+  useMutation,
+} from '@apollo/client'
 import { useTheme } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import {
@@ -11,7 +15,8 @@ import {
   FormLogin,
 } from '../../components/Form/form_login'
 import { gql_auth } from '../../graphql/mutations/auth'
-import { gql_me } from '../../graphql/mutations/me'
+import { gql_createUser } from '../../graphql/mutations/createUser'
+import { gql_me } from '../../graphql/queries/me'
 import { authVariables } from '../../graphql/vars/auth'
 import { Auth, User } from '../../types/backend'
 import * as S from './styles'
@@ -20,34 +25,75 @@ import * as S from './styles'
 // }
 
 export const Login = () => {
-  // const [me] = useMutation<User>(gql_me)
-  const [auth, { loading, error, data }] =
-    useMutation<Auth>(gql_auth, {
-      errorPolicy: 'all',
-      // onCompleted: async ({ token }) => {
-      // const {} = me({})
-      // authVariables.var = {
-      //   email: credentials.email,
-      //   isLogged: true,
-      //   name: credentials.name,
-      //   userId: 'ffff',
-      // }
-      // },
-    })
+  const [actualErrors, setActualErrors] =
+    useState<string[]>([])
+  const [me, { error: meError }] =
+    useLazyQuery<{ me: User }>(gql_me)
+  const [createUser, { error: createUserError }] =
+    useMutation<{
+      createUser: boolean
+    }>(gql_createUser)
+  const [
+    auth,
+    { loading, error: authError, data },
+  ] = useMutation<{ auth: Auth }>(gql_auth, {
+    onCompleted: async ({ auth: { token } }) => {
+      authVariables.var = { token }
+      await me({
+        onCompleted: (user) => {
+          authVariables.var = user.me
+        },
+      })
+    },
+  })
+
+  useEffect(() => {
+    const extractMessage = (
+      obj: Array<Record<string, any> | undefined>,
+    ) => {
+      const resolve: string[] = []
+      obj.forEach((obj) => {
+        if (obj && obj.message) {
+          return resolve.push(obj.message)
+        }
+      })
+      return resolve
+    }
+
+    setActualErrors(
+      extractMessage([
+        meError,
+        createUserError,
+        authError,
+      ]),
+    )
+    return () => {
+      setActualErrors([])
+    }
+  }, [meError, createUserError, authError])
 
   const handleLogin = async (
     credentials: Credentials,
+    isNewUser: boolean,
   ) => {
-    const { email, name, password } = credentials
+    const { email, userName, password } =
+      credentials
     try {
-      const x = await auth({
-        variables: { email, password },
-      })
-      console.log('response: ', x)
+      isNewUser
+        ? await createUser({
+            variables: {
+              email,
+              userName,
+              password,
+            },
+          })
+        : await auth({
+            variables: { email, password },
+          })
     } catch {
       //
     }
-    console.log('error: ', error?.message)
+    console.log('error: ', actualErrors)
   }
 
   const { width } = useWindowSize()
@@ -57,7 +103,7 @@ export const Login = () => {
       <S.Main>
         <FormLogin
           onLogin={handleLogin}
-          errorMesage={error?.message}
+          errorMesage={actualErrors}
         />
       </S.Main>
     )
@@ -70,7 +116,7 @@ export const Login = () => {
       >
         <FormLogin
           onLogin={handleLogin}
-          errorMesage={error?.message}
+          errorMesage={actualErrors}
         />
       </Container>
     </S.Main>

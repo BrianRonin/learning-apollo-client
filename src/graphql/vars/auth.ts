@@ -4,6 +4,7 @@ const schema = {
   firstName: '',
   lastName: '',
   userName: '',
+  token: '',
   id: '',
   email: '',
   createdAt: '',

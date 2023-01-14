@@ -44,11 +44,14 @@ export const ContainerForm = styled.div`
   flex-direction: column;
   justify-content: center;
 `
-export const ErrorMessage = styled.p`
+export const ErrorMessage = styled.div`
   ${({ theme }) => css`
-    margin-top: 1rem;
-    padding: 0.5rem;
-    background: ${theme.colors.bg[1]};
-    color: ${theme.colors.warning[4]};
+  li {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      background: ${theme.colors.bg[1]};
+      color: ${theme.colors.warning[4]};
+      margin: 10px 0;
+    }
   `}
 `

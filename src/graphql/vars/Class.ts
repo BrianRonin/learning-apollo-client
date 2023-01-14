@@ -9,20 +9,22 @@ export class ApolloVariables<i> {
   public variable
 
   constructor(schema: i, name: string) {
-    this.schema = schema
+    this.schema = { __typename: '', ...schema }
     this.name = name
     this.variable = makeVar(schema)
   }
 
   get var() {
+    this.hydrate()
     return this.variable()
   }
 
-  set var(v: typeof this.schema) {
-    this.variable(v)
+  set var(v: Partial<i>) {
+    const value = { ...this.var, ...v } as i
+    this.variable(value)
     localStorage.setItem(
       this.name,
-      JSON.stringify(v),
+      JSON.stringify(value),
     )
   }
 
@@ -37,21 +39,21 @@ export class ApolloVariables<i> {
   }
 
   hydrate() {
-    if (process.versions.browser) {
+    if (typeof window !== 'undefined') {
       const storeVariable = JSON.parse(
-        localStorage.getItem(this.name) ?? '',
+        localStorage.getItem(this.name) ?? '{}',
       )
       switch (storeVariable) {
         case !storeVariable:
           this.reset()
           break
-        case storeVariable === this.var:
+        case storeVariable === this.variable:
           break
         default:
-          this.var = {
-            ...this.var,
+          this.variable({
+            ...this.schema,
             ...storeVariable,
-          }
+          })
           break
       }
     }

@@ -6,17 +6,16 @@ import { MdAlternateEmail } from 'react-icons/md'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
 import { authVariables } from '../../../graphql/vars/auth'
-import { useIsMounted } from 'usehooks-ts'
 
 export type Credentials = {
   email: string
   password: string
-  name: string
+  userName: string
 }
 
 export type formLoginProps = {
-  errorMesage?: string
-  onLogin?: (credentials: Credentials) => any
+  errorMesage: string[] | never[]
+  onLogin?: (credentials: Credentials, CreateUser: boolean) => any
   isNewUser?: boolean
 }
 
@@ -24,47 +23,38 @@ export const FormLogin = ({
   errorMesage,
   onLogin = () => undefined,
 }: formLoginProps) => {
-  const auth = useIsMounted()
-    ? authVariables.use()
-    : authVariables.schema
+  const auth = authVariables.use()
 
   const [email, setEmail] = useState(auth.email)
   const [password, setPassoword] = useState('')
-  const [confirmPassword, setConfirmPassoword] =
-    useState('')
+  const [confirmPassword, setConfirmPassoword] = useState('')
 
-  const [name, setName] = useState(auth.userName)
+  const [userName, setUserName] = useState(auth.userName)
   const [loading, setLoading] = useState(false)
-  const [isNewUser, setIsNewUser] =
-    useState(false)
-  const [
-    confirmPasswordError,
-    setConfirmPasswordError,
-  ] = useState('')
+  const [isNewUser, setIsNewUser] = useState(false)
+  const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
   useEffect(() => {
     console.log('auth: ', auth)
+    console.log('message: ', errorMesage)
   }, [])
 
-  const handleSubmit = async (
-    event: React.FormEvent,
-  ) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-    if (
-      isNewUser &&
-      password !== confirmPassword
-    ) {
+    if (isNewUser && password !== confirmPassword) {
       setConfirmPasswordError('senha inválida')
       return
     }
     setLoading(true)
     if (onLogin) {
-      const x = await onLogin({
-        email,
-        password,
-        name,
-      })
-      console.log(x)
+      await onLogin(
+        {
+          email,
+          password,
+          userName,
+        },
+        isNewUser,
+      )
     }
     setLoading(false)
   }
@@ -74,7 +64,7 @@ export const FormLogin = ({
       <S.ContainerForm>
         <S.ContainerButton className='top-buttons'>
           <Button
-            outline={!isNewUser}
+            outline={isNewUser}
             onClick={(e) => {
               e.preventDefault()
               setIsNewUser(false)
@@ -87,7 +77,7 @@ export const FormLogin = ({
               e.preventDefault()
               setIsNewUser(true)
             }}
-            outline={isNewUser}
+            outline={!isNewUser}
           >
             Criar conta
           </Button>
@@ -96,8 +86,8 @@ export const FormLogin = ({
           <Input
             name='user_name'
             label='Nome'
-            onChange={(v) => setName(v)}
-            value={name}
+            onChange={(v) => setUserName(v)}
+            value={userName}
             type='text'
           />
         )}
@@ -121,9 +111,7 @@ export const FormLogin = ({
           <Input
             name='user_passord_'
             label='Confirme sua senha'
-            onChange={(v) =>
-              setConfirmPassoword(v)
-            }
+            onChange={(v) => setConfirmPassoword(v)}
             value={confirmPassword}
             icon={<GiConfirmed />}
             type='password'
@@ -148,9 +136,13 @@ export const FormLogin = ({
               : 'Entrar'}
           </Button>
         </S.ContainerButton>
-        {!!errorMesage && (
+        {errorMesage.length > 0 && (
           <S.ErrorMessage>
-            {errorMesage}
+            <ul>
+              {errorMesage.map((e, key) => (
+                <li key={'error-msg-' + key}>{e}</li>
+              ))}
+            </ul>
           </S.ErrorMessage>
         )}
       </S.ContainerForm>
