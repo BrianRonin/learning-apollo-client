@@ -4,6 +4,6 @@ import {
 } from '@apollo/client'
 
 export const httpLink = new HttpLink({
-  uri: 'http://localhost:4000',
+  uri: 'http://179.159.233.150:4000',
   // credentials: 'include',
 })
