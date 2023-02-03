@@ -7,6 +7,7 @@ type loadingAnimationSettings = {
 }
 
 export const loadingAnimation = (theme: Theme, settings: loadingAnimationSettings) => css`
+  content:"";
   @keyframes loading {
     0% {
       transform: rotate(0deg);
@@ -18,11 +19,9 @@ export const loadingAnimation = (theme: Theme, settings: loadingAnimationSetting
 
   --size-loading: ${settings.size};
 
-  position: absolute;
-  right: 2rem;
+
   width: var(--size-loading);
   height: var(--size-loading);
-  content:"";
   position: absolute;
   border-top: solid 2px ${settings.color};
   border-radius: 50%;

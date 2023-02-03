@@ -33,11 +33,6 @@ export class ApolloVariables<i> {
     this.variable(this.schema)
   }
 
-  get use() {
-    this.hydrate()
-    return () => useReactiveVar(this.variable)
-  }
-
   hydrate() {
     if (typeof window !== 'undefined') {
       const storeVariable = JSON.parse(

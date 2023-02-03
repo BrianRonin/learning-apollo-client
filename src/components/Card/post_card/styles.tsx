@@ -1,24 +1,63 @@
 import { css } from '@emotion/react'
-import { Main as Container } from '../../Container/container_1/styles'
+import { Inside, Main as Container } from '../../Container/container_1/styles'
 import { Main as Button } from '../../Button/button_0/styles'
 import styled from '@emotion/styled'
+import { loadingAnimation } from '../../../styles/css/loading/loading-animation.css'
 
 export const Main = styled.div`
   ${({ theme }) => css`
     display: flex;
+    flex-direction: column;
     width: 100%;
     margin-top: 1rem;
     justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 1rem;
+  }
     ${Container} {
       width: ${theme.sizes.content};
+      &:hover {
+        cursor: pointer;
+      }
+      &.loading {
+        ${Inside} {
+          @keyframes loadingComponent {
+            0% {
+              background-color: ${theme.colors.bg[0]};
+            }
+            100% {
+              background-color: ${theme.colors.bg[1]};
+            }
+          }
+          animation: loadingComponent 800ms infinite alternate;
+          border-color: none;
+          box-shadow: none;
+          display: flex;
+          justify-content: center;
+          padding: 5rem;
+        }
+      }
     }
     @media ${theme.media.lLarge} {
       ${Container} {
-        width: 80vw;
+        width: 90vw;
       }
     }
   `}
 `
+
+export const ContainerLoading = styled.div`
+  ${({ theme }) => css`
+    ${loadingAnimation(theme, {
+      color: theme.colors.info[1],
+      duration: '800ms',
+      size: '10rem',
+    })}
+    position: relative;
+  `}
+`
+
 export const Heading = styled.h2`
   ${({ theme }) => css`
     @media ${theme.media.lMedium} {
@@ -57,6 +96,7 @@ export const PostTools = styled.div`
     display: flex;
     gap: ${theme.spacings.xxsmall};
     justify-content: flex-end;
+    z-index: 8;
     ${Button} {
       > svg {
         width: 10px;
@@ -78,6 +118,3 @@ export const PostTools = styled.div`
   `}
 `
 
-export const LoadMoreContainer = styled.div`
-  ${({ theme }) => css``}
-`

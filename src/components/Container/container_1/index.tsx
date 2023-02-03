@@ -1,21 +1,24 @@
-import * as React from 'react'
+import { ReactNode, HTMLAttributes } from 'react'
 import * as S from './styles'
 
 export type Custom = {
   boxShadowOnHover?: 'bg' | 'primary'
+  isForm?: boolean
 }
 
 export type containerProps = {
-  children: React.ReactNode
+  children: ReactNode
   custom?: Custom
+  meta?: HTMLAttributes<HTMLDivElement>
 }
 
 export const Container = ({
   children,
   custom,
+  meta,
 }: containerProps) => {
   return (
-    <S.Main>
+    <S.Main {...meta}>
       <S.Inside
         boxShadowOnHover={
           custom?.boxShadowOnHover

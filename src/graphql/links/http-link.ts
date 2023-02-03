@@ -5,7 +5,7 @@ import {
 import { authVariables } from '../vars/auth'
 
 const httpLink = new HttpLink({
-  uri: 'http://179.159.233.150:4000',
+  uri: 'http://192.168.0.254:4000',
   // credentials: 'include',
 })
 

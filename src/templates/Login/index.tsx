@@ -3,12 +3,8 @@ import {
   useLazyQuery,
   useMutation,
 } from '@apollo/client'
-import { useTheme } from '@emotion/react'
-import { useEffect, useState } from 'react'
-import {
-  useScreen,
-  useWindowSize,
-} from 'usehooks-ts'
+import { useState } from 'react'
+import { useWindowSize } from 'usehooks-ts'
 import { Container } from '../../components/Container/container_1'
 import {
   Credentials,
@@ -21,22 +17,56 @@ import { authVariables } from '../../graphql/vars/auth'
 import { Auth, User } from '../../types/backend'
 import * as S from './styles'
 
-// export type loginProps = {
-// }
+type errorsLogin = {
+  createAccount: string[] | never[]
+  login: string[] | never[]
+}
+
+const presetErrors = {
+  createAccount: [],
+  login: [],
+}
 
 export const Login = () => {
   const [actualErrors, setActualErrors] =
-    useState<string[]>([])
-  const [me, { error: meError }] =
-    useLazyQuery<{ me: User }>(gql_me)
-  const [createUser, { error: createUserError }] =
-    useMutation<{
-      createUser: boolean
-    }>(gql_createUser)
-  const [
-    auth,
-    { loading, error: authError, data },
-  ] = useMutation<{ auth: Auth }>(gql_auth, {
+    useState<errorsLogin>(presetErrors)
+
+  const handleError = (
+    isCreateAccount?: boolean,
+  ) => {
+    return (e: ApolloError | undefined) => {
+      if (e?.message)
+        return setActualErrors((errors) => {
+          const createAccount = [
+            ...errors.createAccount,
+          ]
+          const login = [...errors.login]
+          isCreateAccount
+            ? createAccount.push(e.message)
+            : login.push(e.message)
+          return {
+            createAccount,
+            login,
+          }
+        })
+    }
+  }
+
+  const [me] = useLazyQuery<{
+    me: User
+  }>(gql_me, {
+    onError: handleError(),
+  })
+
+  const [createUser] = useMutation<{
+    createUser: boolean
+  }>(gql_createUser, {
+    onError: handleError(true),
+  })
+
+  const [auth] = useMutation<{
+    auth: Auth
+  }>(gql_auth, {
     onCompleted: async ({ auth: { token } }) => {
       authVariables.var = { token }
       await me({
@@ -45,32 +75,8 @@ export const Login = () => {
         },
       })
     },
+    onError: handleError(),
   })
-
-  useEffect(() => {
-    const extractMessage = (
-      obj: Array<Record<string, any> | undefined>,
-    ) => {
-      const resolve: string[] = []
-      obj.forEach((obj) => {
-        if (obj && obj.message) {
-          return resolve.push(obj.message)
-        }
-      })
-      return resolve
-    }
-
-    setActualErrors(
-      extractMessage([
-        meError,
-        createUserError,
-        authError,
-      ]),
-    )
-    return () => {
-      setActualErrors([])
-    }
-  }, [meError, createUserError, authError])
 
   const handleLogin = async (
     credentials: Credentials,
@@ -78,22 +84,17 @@ export const Login = () => {
   ) => {
     const { email, userName, password } =
       credentials
-    try {
-      isNewUser
-        ? await createUser({
-            variables: {
-              email,
-              userName,
-              password,
-            },
-          })
-        : await auth({
-            variables: { email, password },
-          })
-    } catch {
-      //
-    }
-    console.log('error: ', actualErrors)
+    isNewUser
+      ? await createUser({
+          variables: {
+            email,
+            userName,
+            password,
+          },
+        })
+      : await auth({
+          variables: { email, password },
+        })
   }
 
   const { width } = useWindowSize()

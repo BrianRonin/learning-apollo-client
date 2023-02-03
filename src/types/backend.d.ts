@@ -1,8 +1,6 @@
 import * as mock from '../mock/Posts.json'
 
 export type User = {
-  firstName: string
-  lastName: string
   id: string
   userName: string
   email?: string
@@ -13,6 +11,7 @@ export type Comment = {
   comment: string
   id: string
   user: User
+  created_at: string
 }
 
 export type Post = {

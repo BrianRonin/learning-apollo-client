@@ -16,7 +16,7 @@ import { IconContext } from 'react-icons'
 import { Router } from 'next/router'
 
 export type sidebarProps = {
-  links?: navLinkProps[]
+  links?: Omit<navLinkProps, 'loading'>[]
   title: string
   srcLogo?: string
 }

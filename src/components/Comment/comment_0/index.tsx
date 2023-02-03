@@ -1,34 +1,40 @@
+import { Comment as tComment } from '../../../types/backend'
 import { dateFormatter } from '../../../utils/date-formater'
 import { Container } from '../../Container/container_1'
 import * as S from './styles'
-export type commentProps = {
-  comment: string
-  createdAt: string
-  user: { firstName: string }
-}
 
 export const Comment = ({
-  comment,
-  user,
-  createdAt,
-}: commentProps) => {
+  comments,
+}: {
+  comments: tComment[]
+}) => {
   return (
     <S.Main>
-      <Container>
-        <S.CommentMeta>
-          <S.CommentMetaItem>
-            {user.firstName}
-          </S.CommentMetaItem>
-          <span>said:</span>
-        </S.CommentMeta>
-        <S.CommentBody>{comment}</S.CommentBody>
-        <S.CommentMeta>
-          <span>At</span>
-          <S.CommentMetaItem>
-            {dateFormatter(createdAt)}
-          </S.CommentMetaItem>
-        </S.CommentMeta>
-      </Container>
+      {comments.map(
+        (
+          { user, comment, created_at },
+          index,
+        ) => (
+          <Container key={'comment-key-' + index}>
+            <S.CommentMeta>
+              <S.CommentMetaItem>
+                {user.userName}
+              </S.CommentMetaItem>
+            </S.CommentMeta>
+            <S.CommentBody>
+              {comment}
+            </S.CommentBody>
+            <S.CommentMeta>
+              <S.CommentMetaItem>
+                {created_at &&
+                  dateFormatter(created_at, {
+                    isMiliseconds: true,
+                  })}
+              </S.CommentMetaItem>
+            </S.CommentMeta>
+          </Container>
+        ),
+      )}
     </S.Main>
   )
 }

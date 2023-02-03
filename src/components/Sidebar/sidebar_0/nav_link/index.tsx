@@ -8,6 +8,7 @@ export type navLinkProps = {
   newTab?: boolean
   visible: boolean
   loading: string
+  reload?: boolean
 }
 
 export const NavLink = ({
@@ -16,10 +17,16 @@ export const NavLink = ({
   newTab = false,
   visible = false,
   loading,
+  reload,
 }: navLinkProps) => {
   const target = newTab ? '_blank' : '_self'
   return (
-    <Link href={link} passHref legacyBehavior>
+    <Link
+      href={link}
+      passHref
+      legacyBehavior
+      shallow={reload}
+    >
       <S.Main
         loading={loading === link}
         target={target}

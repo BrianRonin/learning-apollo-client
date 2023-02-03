@@ -2,9 +2,21 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import {Main as Button} from '../../Button/button_0/styles'
-export const Main = styled.form`
+import { Inside, Main as Container } from '../../Container/container_1/styles'
+import { Main as Form } from '../form/styles'
+export const Main = styled.div`
   ${({ theme }) => css`
-    //
+    width: 100%;
+    .container-button {
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    @media ${theme.media.lMedium} {
+      /* ${Form} {
+        width: 80%;
+        padding: 0;
+      }
+    } */
   `}
 `
 export const ContainerButton = styled.div`

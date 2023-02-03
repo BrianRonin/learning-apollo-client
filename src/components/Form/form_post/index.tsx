@@ -1,26 +1,30 @@
-import { useState, FormEvent } from 'react'
+import {
+  useState,
+  FormEvent,
+  useEffect,
+} from 'react'
 import * as S from './styles'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
+import { Form } from '../form'
 
 type Post = {
   title: string
-  content: string
+  body: string
 }
 
 export type formPostProps = {
   onSave?: (post: Post) => any
-  post?: Post
+  post?: Partial<Post>
 }
 
 export const FormPost = ({
   onSave,
   post,
 }: formPostProps) => {
-  const { title = '', content = '' } = post || {}
+  const { title = '', body = '' } = post || {}
   const [newTitle, setNewTitle] = useState(title)
-  const [newContent, setNewContent] =
-    useState(content)
+  const [newBody, setNewBody] = useState(body)
   const [saving, setSaving] = useState(false)
 
   const handleSubmit = async (
@@ -30,7 +34,7 @@ export const FormPost = ({
     event.preventDefault()
     const newPost = {
       title: newTitle,
-      content: newContent,
+      body: newBody,
     }
 
     if (onSave) {
@@ -41,37 +45,38 @@ export const FormPost = ({
   }
 
   return (
-    <S.Main onSubmit={handleSubmit}>
-      <Input
-        name='post-title'
-        label='Titulo'
-        value={newTitle}
-        onChange={(v) => setNewTitle(v)}
-      />
-      <Input
-        name='post-content'
-        label='Conteudo'
-        value={newContent}
-        onChange={(v) => setNewContent(v)}
-        as='textarea'
-      />
-      <div
-        style={{
-          justifyContent: 'center',
-          display: 'flex',
-          marginTop: '5rem',
-        }}
-      >
-        <Button
-          disabled={saving}
-          meta={{
-            type: 'submit',
-            style: { width: '100%' },
-          }}
-        >
-          {saving ? 'Salvando...' : 'Salvar'}
-        </Button>
-      </div>
+    <S.Main>
+      <Form meta={{ onSubmit: handleSubmit }}>
+        <div className='body-form'>
+          <Input
+            name='post-title'
+            label='Titulo'
+            value={newTitle}
+            onChange={(v) => setNewTitle(v)}
+          />
+          <Input
+            name='post-body'
+            label='Conteudo'
+            value={newBody}
+            onChange={(v) => setNewBody(v)}
+            as='textarea'
+          />
+          <div className='container-button'>
+            <Button
+              disabled={saving}
+              meta={{
+                type: 'submit',
+                style: { width: '100%' },
+              }}
+            >
+              {saving ? 'Salvando...' : 'Salvar'}
+            </Button>
+          </div>
+          {/* <ul className='error-message'>
+            <li>um erro</li>
+          </ul> */}
+        </div>
+      </Form>
     </S.Main>
   )
 }

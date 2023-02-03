@@ -1,6 +1,7 @@
 import { css, Theme } from '@emotion/react'
 import styled from '@emotion/styled'
 import { HeadingProps } from '.'
+import { CSS_select } from '../../../styles/css/selection.css'
 
 type props = Omit<HeadingProps, 'children'>
 
@@ -31,6 +32,7 @@ const mediaFont = (theme: Theme) => css`
 
 export const Main = styled.h1<props>`
   ${({ theme, size, uppercase }) => css`
+    ${CSS_select(theme)}
     color: ${theme.colors.text[4]};
     text-transform: ${uppercase
       ? 'uppercase'

@@ -1,7 +1,6 @@
 
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Main as Form } from '../../components/Form/form_login/styles'
 import { Main as Container, Inside } from '../../components/Container/container_1/styles'
 
 export const Main = styled.div`
@@ -12,20 +11,10 @@ export const Main = styled.div`
     justify-content: center;
     margin-top: 5rem;
     align-items: center;
-    ${Form} {
-      width: 50rem;
-    }
     ${Container} {
       ${Inside} {
+        width: max-content !important;
         padding: 4rem;
-      }
-    }
-    @media ${theme.media.lMedium} {
-      ${Form} {
-        justify-content: center;
-        align-items: center;
-        padding: 10vw;
-        width: 100%;
       }
     }
     @media ${theme.media.lSmallest} {

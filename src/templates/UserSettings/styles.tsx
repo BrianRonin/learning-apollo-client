@@ -2,32 +2,25 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { Main as Form } from '../../components/Form/form_user_settings/styles'
-import {Main as Container, Inside as ContainerInside} from '../../components/Container/container_1/styles'
+import {Main as Container, Inside} from '../../components/Container/container_1/styles'
 
 export const Main = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
+    height: 100%;
     justify-content: center;
+    margin-top: 5rem;
     align-items: center;
-    height: 90vh;
-    ${Form} {
-      width: 50rem;
-    }
     ${Container} {
-      ${ContainerInside} {
-        padding: 5rem;
+      ${Inside} {
+        width: max-content !important;
+        padding: 4rem;
       }
     }
-    @media ${theme.media.lMedium} {
-      ${Form} {
-        width: 80vw;
-      }
-      ${Container} {
-        ${ContainerInside} {
-          padding: 3rem;
-        }
-      }
+    @media ${theme.media.lSmallest} {
+      margin: 0;
+      padding: 0;
     }
   `}
 `

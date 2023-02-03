@@ -5,9 +5,24 @@ import {lighten} from 'polished'
 
 export const Main = styled.div`
   ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100;
     ${Container} {
-      margin: ${theme.spacings.medium} ${theme.spacings.xhero};
+      &:hover {
+        cursor: auto;
+      }
+      margin: 1rem;
       text-align: start;
+      width: 80%;
+      max-width: 80rem;
+    }
+    @media ${theme.media.lMedium} {
+      ${Container} {
+        margin: 1.5rem ;
+        text-align: start;
+      }
     }
   `}
 `;

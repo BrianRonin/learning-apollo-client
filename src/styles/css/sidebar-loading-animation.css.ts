@@ -3,7 +3,6 @@ import { loadingAnimation } from "./loading/loading-animation.css";
 
 
 export const loadingAnimationSidebar = (theme: Theme) => css`
-
   &:after{
     ${loadingAnimation(theme,
       {
@@ -11,7 +10,8 @@ export const loadingAnimationSidebar = (theme: Theme) => css`
         color: theme.colors.primary[2],
         size: '20px'
       }
-    )}
+      )}
+    right: 2rem;
   }
   ::before {
     ${loadingAnimation(theme,
@@ -21,5 +21,6 @@ export const loadingAnimationSidebar = (theme: Theme) => css`
         size: '20px'
       })
     }
+    right: 2rem;
   }
 `

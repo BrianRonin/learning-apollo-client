@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { Sidebar } from '../../components/Sidebar/sidebar_0/sidebar'
 import { ToggleTheme } from '../../components/Switch/toggle_theme'
+import { authVariables } from '../../graphql/vars/auth'
 import * as Me from '../../mock/Me.json'
 import * as S from './styles'
 
@@ -21,7 +22,11 @@ export const Base = ({ children }: baseProps) => {
             newTab: false,
           },
           {
-            link: '/my-posts',
+            link:
+              '/posts?author=' +
+              encodeURIComponent(
+                authVariables.var.id ?? '',
+              ),
             text: 'Meus posts',
             visible: true,
             newTab: false,

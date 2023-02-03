@@ -21,6 +21,7 @@ export type inputProps = {
   as?: 'input' | 'textarea'
   reference?: HTMLInputElement | null
   meta?: InputHTMLAttributes<HTMLInputElement>
+  defaultValue?: string
 }
 
 export const Input = ({

@@ -2,10 +2,11 @@ import {
   ApolloClient,
   from,
 } from '@apollo/client'
-import { InMemoryCache } from '@apollo/client/cache'
+
 import { apolloLink } from '../links/http-link'
+import { apolloCache } from './cache'
 
 export const apolloClient = new ApolloClient({
   link: from([apolloLink]),
-  cache: new InMemoryCache(),
+  cache: apolloCache,
 })

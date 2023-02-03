@@ -1,3 +1,4 @@
+import { useReactiveVar } from '@apollo/client'
 import { ApolloVariables } from './Class'
 
 const schema = {
@@ -9,8 +10,10 @@ const schema = {
   email: '',
   createdAt: '',
 }
-
 export const authVariables = new ApolloVariables(
   schema,
   '__user__',
 )
+
+export const useUser = () =>
+  useReactiveVar(authVariables.variable)

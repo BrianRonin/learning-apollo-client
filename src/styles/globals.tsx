@@ -4,6 +4,7 @@ import {
   useTheme,
 } from '@emotion/react'
 import { CSS_ScrollBar } from './css/scrollbar/scrollbar_1.css'
+import { CSS_notSelect } from './css/selection.css'
 
 export const GlobalStyles = () => {
   const theme = useTheme()
@@ -16,13 +17,7 @@ export const GlobalStyles = () => {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-          -webkit-tap-highlight-color: transparent;
-          -webkit-touch-callout: none;
-          -webkit-user-select: none;
-          -khtml-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
+          ${CSS_notSelect(theme)}
         }
         html {
           font-size: 62.5%;

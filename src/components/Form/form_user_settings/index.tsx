@@ -4,6 +4,7 @@ import { RiLockPasswordLine } from 'react-icons/ri'
 import { MdAlternateEmail } from 'react-icons/md'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
+import { Form } from '../form'
 
 export type formUserSettingsProps = {
   errorMesage?: any
@@ -31,52 +32,60 @@ export const FormUserSettings = ({
   }
 
   return (
-    <S.Main onSubmit={handleSubmit}>
-      <Input
-        name='user-identifier'
-        label='nome'
-        onChange={(v) => setName(v)}
-        value={name}
-        type='name'
-      />
-      <Input
-        name='user-identifier'
-        label='email'
-        onChange={(v) => setEmail(v)}
-        value={email}
-        icon={<MdAlternateEmail />}
-        type='email'
-      />
-      <Input
-        name='user-identifier'
-        label='Repita sua senha'
-        onChange={(v) => setPassword(v)}
-        value={password}
-        icon={<RiLockPasswordLine />}
-        type='password'
-      />
-      {!!errorMesage && (
-        <S.ErrorMessage>
-          {errorMesage}
-        </S.ErrorMessage>
-      )}
-      <S.ContainerButton>
-        <Button
-          disabled={loading}
-          meta={{ style: { width: '100%' } }}
-        >
-          {loading ? 'Aguarde...' : 'Salvar'}
-        </Button>
-        <Button
-          disabled={loading}
-          meta={{
-            style: { width: '100%' },
-            className: 'button-delete-user',
-          }}
-        >
-          Deletar usuário
-        </Button>
-      </S.ContainerButton>
+    <S.Main>
+      <Form
+        meta={{
+          onSubmit: handleSubmit,
+        }}
+      >
+        <div className='content-form'>
+          <Input
+            name='user-name'
+            label='Altere seu nome'
+            onChange={(v) => setName(v)}
+            value={name}
+            type='name'
+          />
+          <Input
+            name='user-email'
+            label='Altere seu email'
+            onChange={(v) => setEmail(v)}
+            value={email}
+            icon={<MdAlternateEmail />}
+            type='email'
+          />
+          <Input
+            name='user-password'
+            label='Confirme sua senha'
+            onChange={(v) => setPassword(v)}
+            value={password}
+            icon={<RiLockPasswordLine />}
+            type='password'
+          />
+          {!!errorMesage && (
+            <div className='error-message'>
+              {errorMesage}
+            </div>
+          )}
+          <div className='container-button'>
+            <Button
+              disabled={loading}
+              meta={{ style: { width: '100%' } }}
+            >
+              {loading ? 'Aguarde...' : 'Salvar'}
+            </Button>
+            <Button
+              disabled={loading}
+              meta={{
+                style: { width: '100%' },
+                className: 'button-delete-user',
+              }}
+            >
+              Me deletar 😨
+            </Button>
+          </div>
+        </div>
+      </Form>
     </S.Main>
   )
 }

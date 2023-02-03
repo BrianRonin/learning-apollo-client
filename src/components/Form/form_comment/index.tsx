@@ -1,16 +1,17 @@
 import { FormEvent, useState } from 'react'
-import { Button } from '../../Button/button_0'
 import { Container } from '../../Container/container_1'
 import { Input } from '../../Input/input_0'
 import * as S from './styles'
 import { IoMdSend } from 'react-icons/io'
+import { Heading } from '../../Text/heading_0'
+import { Button } from '../../Button/button_1'
 
 export type formCommentProps = {
-  handleSubmit: (
+  handleSubmit?: (
     comment: string,
     setComment: () => any,
   ) => any
-  buttonDisabled: boolean
+  buttonDisabled?: boolean
 }
 
 export const FormComment = ({
@@ -31,24 +32,24 @@ export const FormComment = ({
 
   return (
     <S.Main>
-      <Container>
-        <S.Form onSubmit={onSubmit}>
-          <h3>Create a comment</h3>
-          <Input
-            name='comment'
-            label='Comment'
-            as='textarea'
-            onChange={(v) => {
-              setComment(v)
-            }}
-            value={comment}
-            disabled={buttonDisabled}
-          />
-          <Button icon={<IoMdSend />}>
-            create a comment
-          </Button>
-        </S.Form>
-      </Container>
+      <S.Form onSubmit={onSubmit}>
+        <Heading size='medium'>
+          Deixe um comentário...
+        </Heading>
+        <Input
+          name='comment'
+          label='Comentário'
+          as='textarea'
+          onChange={(v) => {
+            setComment(v)
+          }}
+          value={comment}
+          disabled={buttonDisabled}
+        />
+        <div className='button-container'>
+          <Button Icon={IoMdSend} text='Enviar' />
+        </div>
+      </S.Form>
     </S.Main>
   )
 }
