@@ -1,12 +1,9 @@
-import {
-  useState,
-  FormEvent,
-  useEffect,
-} from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import * as S from './styles'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
 import { Form } from '../form'
+import { tForm } from '../../../types/form'
 
 type Post = {
   title: string
@@ -14,22 +11,17 @@ type Post = {
 }
 
 export type formPostProps = {
-  onSave?: (post: Post) => any
+  onSave?: (form: tForm['mutatePost']) => void
   post?: Partial<Post>
 }
 
-export const FormPost = ({
-  onSave,
-  post,
-}: formPostProps) => {
+export const FormPost = ({ onSave, post }: formPostProps) => {
   const { title = '', body = '' } = post || {}
   const [newTitle, setNewTitle] = useState(title)
   const [newBody, setNewBody] = useState(body)
   const [saving, setSaving] = useState(false)
 
-  const handleSubmit = async (
-    event: FormEvent,
-  ) => {
+  const handleSubmit = async (event: FormEvent) => {
     setSaving(true)
     event.preventDefault()
     const newPost = {
@@ -72,9 +64,6 @@ export const FormPost = ({
               {saving ? 'Salvando...' : 'Salvar'}
             </Button>
           </div>
-          {/* <ul className='error-message'>
-            <li>um erro</li>
-          </ul> */}
         </div>
       </Form>
     </S.Main>

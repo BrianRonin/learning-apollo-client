@@ -7,6 +7,7 @@ import {
 } from '@apollo/client'
 import Router, { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { useIsMounted } from 'usehooks-ts'
 import PostCard from '../../components/Card/post_card'
 import { S_Container } from '../../components/Container/container_0/styles'
@@ -18,24 +19,16 @@ import { usePageBottom } from '../../hooks/usePageBottom'
 import { Post } from '../../types/backend'
 import * as S from './styles'
 
-export const Posts = ({
-  myPosts,
-}: {
-  myPosts?: boolean
-}) => {
+export const Posts = ({ myPosts }: { myPosts?: boolean }) => {
   const router = useRouter()
   const { query } = useRouter()
   const client = useApolloClient()
   const mounted = useIsMounted()
   const initialPosts = '5'
   const { id } = useUser()
-  const {
-    data,
-    fetchMore,
-    error,
-    loading,
-    refetch,
-  } = useQuery<{ posts: Post[] }>(gql_posts, {
+  const { data, fetchMore, error, loading, refetch } = useQuery<{
+    posts: Post[]
+  }>(gql_posts, {
     variables: {
       limit: initialPosts,
       userId: myPosts ? id : '',
@@ -44,10 +37,8 @@ export const Posts = ({
 
   const [deletePost] = useMutation(gql_deletePost)
 
-  const [loadingMore, setLoadingMore] =
-    useState(false)
-  const [allLoaded, setAllLoaded] =
-    useState(false)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [allLoaded, setAllLoaded] = useState(false)
 
   useEffect(() => {
     refetch({
@@ -63,9 +54,7 @@ export const Posts = ({
     })
   }
 
-  const handleDeletePost = async (
-    postId: string,
-  ) => {
+  const handleDeletePost = async (postId: string) => {
     console.log(postId)
     deletePost({
       variables: { id: postId },
@@ -73,20 +62,19 @@ export const Posts = ({
         cache.modify({
           fields: {
             posts(existing, { readField }) {
-              return existing.filter(
-                (postRef: Reference) => {
-                  const refId = readField({
-                    fieldName: 'id',
-                    from: postRef,
-                  })
-                  return postId !== refId
-                },
-              )
+              return existing.filter((postRef: Reference) => {
+                const refId = readField({
+                  fieldName: 'id',
+                  from: postRef,
+                })
+                return postId !== refId
+              })
             },
           },
         })
       },
     })
+    toast('Post deletado 👻')
   }
 
   const handleLoadMore = async () => {
@@ -101,14 +89,12 @@ export const Posts = ({
       setLoadingMore(true)
       await new Promise(() =>
         setTimeout(async () => {
-          const { data: newPosts } =
-            await fetchMore({
-              variables: {
-                start:
-                  data.posts.length.toString(),
-                limit: initialPosts,
-              },
-            })
+          const { data: newPosts } = await fetchMore({
+            variables: {
+              start: data.posts.length.toString(),
+              limit: initialPosts,
+            },
+          })
           setLoadingMore(false)
           if (newPosts.posts.length === 0) {
             setAllLoaded(true)
@@ -122,9 +108,7 @@ export const Posts = ({
 
   if (error)
     return (
-      <S_Container
-        style={{ textAlign: 'center' }}
-      >
+      <S_Container style={{ textAlign: 'center' }}>
         <h1>Ocorreu um erro ._.</h1>
         {error.message}
       </S_Container>
@@ -135,9 +119,7 @@ export const Posts = ({
       {data?.posts && (
         <PostCard
           posts={data.posts}
-          onClick={(e, p) =>
-            Router.push('/post/' + p.id)
-          }
+          onClick={(e, p) => Router.push('/post/' + p.id)}
           onDelete={handleDeletePost}
           onEdit={handleEdit}
         />
@@ -146,9 +128,7 @@ export const Posts = ({
         <PostCard isLoading={[1]} />
       )}
       {allLoaded && (
-        <Heading size='medium'>
-          Você chegou ao fim
-        </Heading>
+        <Heading size='medium'>Você chegou ao fim</Heading>
       )}
       <div ref={bottomRef}></div>
     </S.Main>
