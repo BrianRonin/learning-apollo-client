@@ -1,18 +1,12 @@
-import {
-  useLazyQuery,
-  useMutation,
-  useQuery,
-} from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { useWindowSize } from 'usehooks-ts'
 import { S_Container } from '../../components/Container/container_0/styles'
 import { FormPost } from '../../components/Form/form_post'
 import gql_post from '../../graphql/queries/post'
 import { gql_editPost } from '../../graphql/mutations/editPost'
 import { Post } from '../../types/backend'
 import { tForm } from '../../types/form'
-import { Base } from '../Base'
 import * as S from './styles'
 import { toast } from 'react-toastify'
 import { useUser } from '../../graphql/vars/auth'
@@ -93,7 +87,6 @@ export const MutatePost = () => {
         ...form,
       },
     })
-    // toast.success('Post editado 👻')
   }
 
   const handleCreatePost = async (form: tForm['mutatePost']) => {

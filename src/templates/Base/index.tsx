@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 import { Sidebar } from '../../components/Sidebar/sidebar_0/sidebar'
 import { ToggleTheme } from '../../components/Switch/toggle_theme'
 import { authVariables } from '../../graphql/vars/auth'
@@ -7,6 +7,7 @@ import * as S from './styles'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useTheme } from '@emotion/react'
+import { Loading } from '../../components/loading'
 
 export type baseProps = {
   children: ReactNode
@@ -72,7 +73,9 @@ export const Base = ({ children }: baseProps) => {
         theme={theme.name === 'dark' ? 'dark' : 'light'}
       />
       <button onClick={testToast}>eeeeeee</button>
-      <S.Content>{children}</S.Content>
+      <S.Content>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+      </S.Content>
     </S.Main>
   )
 }

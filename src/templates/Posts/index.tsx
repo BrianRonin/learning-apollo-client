@@ -1,10 +1,4 @@
-import {
-  Reference,
-  useApolloClient,
-  useLazyQuery,
-  useMutation,
-  useQuery,
-} from '@apollo/client'
+import { Reference, useMutation, useQuery } from '@apollo/client'
 import Router, { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -22,8 +16,6 @@ import * as S from './styles'
 export const Posts = ({ myPosts }: { myPosts?: boolean }) => {
   const router = useRouter()
   const { query } = useRouter()
-  const client = useApolloClient()
-  const mounted = useIsMounted()
   const initialPosts = '5'
   const { id } = useUser()
   const { data, fetchMore, error, loading, refetch } = useQuery<{

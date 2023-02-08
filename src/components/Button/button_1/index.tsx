@@ -11,15 +11,17 @@ import { IconType } from 'react-icons'
 export type buttonProps = {
   text: string
   Icon: IconType | any
+  disabled?: boolean
 }
 
 export const Button = ({
   text,
   Icon,
+  disabled,
 }: buttonProps) => {
   return (
     <S.Main>
-      <S.Button>
+      <S.Button disabled={disabled}>
         <S.Content>
           <S.IconContainer>
             <Icon />

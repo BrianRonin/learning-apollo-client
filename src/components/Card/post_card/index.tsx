@@ -4,14 +4,8 @@ import * as S from './styles'
 import { dateFormatter } from '../../../utils/date-formater'
 import { Button } from '../../Button/button_0'
 
-import {
-  AiFillDelete,
-  AiFillEdit,
-} from 'react-icons/ai'
-import {
-  HtmlHTMLAttributes,
-  MouseEvent,
-} from 'react'
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
+import { HtmlHTMLAttributes, MouseEvent } from 'react'
 import {
   authVariables,
   useUser,
@@ -20,10 +14,7 @@ import {
 export type postCardProps = {
   posts?: Post[]
   isLoading?: undefined | number[]
-  onClick?: (
-    e: MouseEvent<HTMLDivElement>,
-    post: Post,
-  ) => any
+  onClick?: (e: MouseEvent<HTMLDivElement>, post: Post) => any
   onDelete?: (id: string) => any
   onEdit?: (id: string) => any
 }
@@ -75,25 +66,22 @@ const PostCard = ({
               title,
               user,
               createdAt,
-              comments,
               userId,
               id: postId,
+              numberOfComments,
             },
             index,
           ) => (
             <Container
               key={'post-id-' + index}
               meta={{
-                onClick: (e) =>
-                  handleOnClick(e, index),
+                onClick: (e) => handleOnClick(e, index),
               }}
             >
               <S.Heading>{title}</S.Heading>
               <S.Meta>
                 De:
-                <S.MetaItem>
-                  {user?.userName}
-                </S.MetaItem>
+                <S.MetaItem>{user?.userName}</S.MetaItem>
                 <br />
                 Em:
                 <S.MetaItem>
@@ -101,9 +89,7 @@ const PostCard = ({
                 </S.MetaItem>
                 <br />
                 Comentários:
-                <S.MetaItem>
-                  {comments.length}
-                </S.MetaItem>
+                <S.MetaItem>{numberOfComments}</S.MetaItem>
               </S.Meta>
               {id === userId && (
                 <S.PostTools>
@@ -113,9 +99,7 @@ const PostCard = ({
                   />
                   <Button
                     icon={<AiFillDelete />}
-                    onClick={() =>
-                      onDelete(postId)
-                    }
+                    onClick={() => onDelete(postId)}
                   />
                 </S.PostTools>
               )}

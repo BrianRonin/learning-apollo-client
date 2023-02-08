@@ -1,6 +1,8 @@
 import { gql } from '@apollo/client'
+import { fragment_post } from '../fragments/post'
 
 export const gql_posts = gql`
+  ${fragment_post}
   query Posts(
     $sort: String = "indexRef"
     $order: Order = DESC
@@ -18,16 +20,7 @@ export const gql_posts = gql`
       userId: $userId
     ) {
       ... on Post {
-        title
-        id
-        createdAt
-        userId
-        comments {
-          id
-        }
-        user {
-          userName
-        }
+        ...post
       }
     }
   }

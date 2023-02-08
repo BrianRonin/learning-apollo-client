@@ -11,7 +11,7 @@ export type Comment = {
   comment: string
   id: string
   user: User
-  created_at: string
+  createdAt: string
 }
 
 export type Post = {
@@ -22,6 +22,7 @@ export type Post = {
   userId: string
   user: User
   comments: Comment[]
+  numberOfComments: number
 }
 
 export type Auth = {

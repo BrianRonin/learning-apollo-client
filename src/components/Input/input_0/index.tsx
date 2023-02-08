@@ -1,10 +1,7 @@
-import { ChangeEvent, ReactNode } from 'react'
+import { ChangeEvent, ReactNode, useEffect } from 'react'
 import * as S from './styles'
 import { AiFillCloseCircle } from 'react-icons/ai'
-import {
-  useState,
-  InputHTMLAttributes,
-} from 'react'
+import { useState, InputHTMLAttributes } from 'react'
 
 export type inputProps = {
   label: string
@@ -37,12 +34,9 @@ export const Input = ({
   meta,
 }: inputProps) => {
   const [hasValue, setHasValue] = useState(false)
-  const [inputValue, setInputValue] =
-    useState(value)
+  const [inputValue, setInputValue] = useState(value)
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
     if (inputValue) {
       onChange && onChange(inputValue, e)
@@ -52,6 +46,18 @@ export const Input = ({
       cleanInput()
     }
   }
+
+  useEffect(() => {
+    if (value) {
+      setInputValue(value)
+    } else {
+      cleanInput()
+    }
+
+    return () => {
+      setInputValue('')
+    }
+  }, [value])
 
   const cleanInput = () => {
     setInputValue('')
@@ -80,18 +86,12 @@ export const Input = ({
           {label}
         </S.Label>
         {!!icon && as !== 'textarea' && icon}
-        {!icon &&
-          as !== 'textarea' &&
-          hasValue && (
-            <AiFillCloseCircle
-              onClick={cleanInput}
-            />
-          )}
+        {!icon && as !== 'textarea' && hasValue && (
+          <AiFillCloseCircle onClick={cleanInput} />
+        )}
       </S.inputContainer>
       {!!errorMessage && (
-        <S.ErrorMessage>
-          {errorMessage}
-        </S.ErrorMessage>
+        <S.ErrorMessage>{errorMessage}</S.ErrorMessage>
       )}
     </S.Main>
   )

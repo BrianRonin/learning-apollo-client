@@ -12,13 +12,6 @@ const gql_post = gql`
     post(id: $id) {
       ... on Post {
         ...post
-        user {
-          ...user
-        }
-        comments {
-          created_at
-          ...comment
-        }
       }
     }
   }

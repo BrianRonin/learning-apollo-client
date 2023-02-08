@@ -12,5 +12,15 @@ export const apolloCache = new InMemoryCache({
         },
       },
     },
+    Post: {
+      fields: {
+        numberOfComments: {
+          read(_, { readField }) {
+            const comments = readField('comments') as string[]
+            return comments?.length ?? 0
+          },
+        },
+      },
+    },
   },
 })

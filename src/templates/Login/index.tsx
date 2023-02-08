@@ -11,7 +11,7 @@ import {
   FormLogin,
 } from '../../components/Form/form_login'
 import { gql_auth } from '../../graphql/mutations/auth'
-import { gql_createUser } from '../../graphql/mutations/createUser'
+import { gql_createUser } from '../../graphql/mutations/user'
 import { gql_me } from '../../graphql/queries/me'
 import { authVariables } from '../../graphql/vars/auth'
 import { Auth, User } from '../../types/backend'
@@ -31,15 +31,11 @@ export const Login = () => {
   const [actualErrors, setActualErrors] =
     useState<errorsLogin>(presetErrors)
 
-  const handleError = (
-    isCreateAccount?: boolean,
-  ) => {
+  const handleError = (isCreateAccount?: boolean) => {
     return (e: ApolloError | undefined) => {
       if (e?.message)
         return setActualErrors((errors) => {
-          const createAccount = [
-            ...errors.createAccount,
-          ]
+          const createAccount = [...errors.createAccount]
           const login = [...errors.login]
           isCreateAccount
             ? createAccount.push(e.message)
@@ -82,8 +78,7 @@ export const Login = () => {
     credentials: Credentials,
     isNewUser: boolean,
   ) => {
-    const { email, userName, password } =
-      credentials
+    const { email, userName, password } = credentials
     isNewUser
       ? await createUser({
           variables: {
@@ -112,9 +107,7 @@ export const Login = () => {
 
   return (
     <S.Main>
-      <Container
-        custom={{ boxShadowOnHover: 'bg' }}
-      >
+      <Container custom={{ boxShadowOnHover: 'bg' }}>
         <FormLogin
           onLogin={handleLogin}
           errorMesage={actualErrors}
