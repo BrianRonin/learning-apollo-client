@@ -5,16 +5,14 @@ import { Theme } from '../contexts/theme/theme'
 import { Base } from '../templates/Base'
 import { ApolloProvider } from '@apollo/client'
 import { apolloClient } from '../graphql/apollo/client'
+
 const myFont = Roboto({
   style: ['normal', 'italic'],
   weight: ['100', '300', '500', '900'],
   subsets: ['latin'],
 })
 
-export default function App({
-  Component,
-  pageProps,
-}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={apolloClient}>
       <Theme>

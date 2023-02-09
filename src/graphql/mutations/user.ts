@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client'
+import { fragment_user } from '../fragments/user'
 
 export const gql_createUser = gql`
   mutation createUser(
@@ -21,11 +22,17 @@ export const gql_deleteUser = gql`
     deleteUser(password: $password)
   }
 `
-
+/**
+ * Input: {
+ *    email: String!
+ *    userName: String!
+ *  }
+ */
 export const gql_updateUser = gql`
+  ${fragment_user}
   mutation updateUser($password: String!, $input: UpdateUser!) {
     updateUser(password: $password, userInput: $input) {
-      userName
+      ...user
     }
   }
 `

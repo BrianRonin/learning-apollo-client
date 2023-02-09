@@ -96,8 +96,8 @@ export const MutatePost = () => {
   }
 
   const handleSubmit = (form: tForm['mutatePost']) => {
-    if (id) handleEditPost(form)
-    handleCreatePost(form)
+    if (id) return handleEditPost(form)
+    return handleCreatePost(form)
   }
 
   if (!post && id)

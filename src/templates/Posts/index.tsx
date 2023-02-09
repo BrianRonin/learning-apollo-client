@@ -116,6 +116,13 @@ export const Posts = ({ myPosts }: { myPosts?: boolean }) => {
           onEdit={handleEdit}
         />
       )}
+      {data?.posts && data.posts.length === 0 && (
+        <S_Container
+          style={{ display: 'flex', justifyContent: 'center' }}
+        >
+          <h1>Sem posts ._.</h1>
+        </S_Container>
+      )}
       {(loadingMore || loading) && !allLoaded && (
         <PostCard isLoading={[1]} />
       )}

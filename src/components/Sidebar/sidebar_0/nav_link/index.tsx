@@ -4,11 +4,12 @@ import { Typewriter } from 'react-simple-typewriter'
 
 export type navLinkProps = {
   text: string
-  link: string
+  link?: string
   newTab?: boolean
   visible: boolean
-  loading: string
+  loading?: string
   reload?: boolean
+  onClick?: () => any
 }
 
 export const NavLink = ({
@@ -17,23 +18,22 @@ export const NavLink = ({
   newTab = false,
   visible = false,
   loading,
-  reload,
+  reload = false,
+  onClick,
 }: navLinkProps) => {
   const target = newTab ? '_blank' : '_self'
   return (
     <Link
-      href={link}
+      href={typeof link === 'string' ? link : '/'}
       passHref
       legacyBehavior
-      shallow={reload}
     >
       <S.Main
         loading={loading === link}
         target={target}
+        onClick={onClick}
       >
-        {!!visible && (
-          <Typewriter words={[text]} />
-        )}
+        {!!visible && <Typewriter words={[text]} />}
         {!visible && text}
       </S.Main>
     </Link>

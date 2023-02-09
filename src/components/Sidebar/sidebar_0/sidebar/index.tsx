@@ -1,22 +1,16 @@
 import { LogoLink } from '../logo_link'
 import * as S from './styles'
-import {
-  NavLink,
-  navLinkProps,
-} from '../nav_link'
-import {
-  MouseEvent,
-  useEffect,
-  useState,
-} from 'react'
+import { NavLink, navLinkProps } from '../nav_link'
+import { MouseEvent, useEffect, useState } from 'react'
 import { useTheme } from '@emotion/react'
 import { VscChromeClose } from 'react-icons/vsc'
 import { VscMenu } from 'react-icons/vsc'
 import { IconContext } from 'react-icons'
 import { Router } from 'next/router'
+import { useUser } from '../../../../graphql/vars/auth'
 
 export type sidebarProps = {
-  links?: Omit<navLinkProps, 'loading'>[]
+  links?: navLinkProps[]
   title: string
   srcLogo?: string
 }
@@ -26,15 +20,11 @@ export const Sidebar = ({
   title,
   srcLogo,
 }: sidebarProps) => {
-  const [sideBarVisible, setSideBarVisible] =
-    useState(false)
+  const [sideBarVisible, setSideBarVisible] = useState(false)
   const theme = useTheme()
-  const [routeLoading, setRouteLoading] =
-    useState('')
+  const [routeLoading, setRouteLoading] = useState('')
 
-  function handleButtonOpenCloseSidebar(
-    e: MouseEvent,
-  ) {
+  function handleButtonOpenCloseSidebar(e: MouseEvent) {
     e.preventDefault()
     setSideBarVisible((visible) => !visible)
   }
@@ -47,20 +37,14 @@ export const Sidebar = ({
       'routeChangeComplete',
       () =>
         new Promise(() =>
-          setTimeout(
-            () => setRouteLoading(''),
-            300,
-          ),
+          setTimeout(() => setRouteLoading(''), 300),
         ),
     )
     Router.events.on(
       'routeChangeError',
       (e) =>
         new Promise(() =>
-          setTimeout(
-            () => setRouteLoading(''),
-            300,
-          ),
+          setTimeout(() => setRouteLoading(''), 300),
         ),
     )
     return () => {
@@ -115,6 +99,7 @@ export const Sidebar = ({
                 text={link.text}
                 visible={sideBarVisible}
                 loading={routeLoading}
+                onClick={link.onClick}
               />
             ))}
           </S.Nav>

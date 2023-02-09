@@ -1,7 +1,4 @@
-import {
-  makeVar,
-  useReactiveVar,
-} from '@apollo/client'
+import { makeVar } from '@apollo/client'
 
 export class ApolloVariables<i> {
   public schema
@@ -14,18 +11,15 @@ export class ApolloVariables<i> {
     this.variable = makeVar(schema)
   }
 
-  get var() {
+  get var(): typeof this.schema {
     this.hydrate()
-    return this.variable()
+    return this.variable() as typeof this.schema
   }
 
   set var(v: Partial<i>) {
     const value = { ...this.var, ...v } as i
     this.variable(value)
-    localStorage.setItem(
-      this.name,
-      JSON.stringify(value),
-    )
+    localStorage.setItem(this.name, JSON.stringify(value))
   }
 
   reset() {

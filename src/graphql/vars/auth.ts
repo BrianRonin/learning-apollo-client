@@ -10,6 +10,9 @@ const schema = {
   email: '',
   createdAt: '',
 }
+
+export type User = typeof schema
+
 export const authVariables = new ApolloVariables(
   schema,
   '__user__',

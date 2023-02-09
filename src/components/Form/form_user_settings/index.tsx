@@ -5,30 +5,39 @@ import { MdAlternateEmail } from 'react-icons/md'
 import { Button } from '../../Button/button_0'
 import { Input } from '../../Input/input_0'
 import { Form } from '../form'
+import { tForm } from '../../../types/form'
 
 export type formUserSettingsProps = {
-  errorMesage?: any
-  onLogin?: any
+  errorMesage?: string
+  onSubmit?: (user: tForm['updateUser']) => any
+  onDelete?: (password: string) => any
 }
 
 export const FormUserSettings = ({
   errorMesage,
-  onLogin,
+  onSubmit,
+  onDelete = () => undefined,
 }: formUserSettingsProps) => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (
-    event: React.FormEvent,
-  ) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     setLoading(true)
     event.preventDefault()
-    if (onLogin) {
-      await onLogin(email, password)
+    if (onSubmit) {
+      await onSubmit({
+        input: { email, userName: name },
+        password,
+      })
     }
     setLoading(false)
+  }
+
+  const handleDelete = async (event: React.FormEvent) => {
+    event.preventDefault()
+    await onDelete(password)
   }
 
   return (
@@ -64,7 +73,9 @@ export const FormUserSettings = ({
           />
           {!!errorMesage && (
             <div className='error-message'>
-              {errorMesage}
+              <ul>
+                <li>{errorMesage}</li>
+              </ul>
             </div>
           )}
           <div className='container-button'>
@@ -74,15 +85,16 @@ export const FormUserSettings = ({
             >
               {loading ? 'Aguarde...' : 'Salvar'}
             </Button>
-            <Button
+            {/* <Button
               disabled={loading}
               meta={{
                 style: { width: '100%' },
                 className: 'button-delete-user',
               }}
+              onClick={handleDelete}
             >
               Me deletar 😨
-            </Button>
+            </Button> */}
           </div>
         </div>
       </Form>

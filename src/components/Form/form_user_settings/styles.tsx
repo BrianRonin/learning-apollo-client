@@ -1,8 +1,6 @@
 
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import {Main as Button} from '../../Button/button_0/styles'
-import { Inside, Main as Container } from '../../Container/container_1/styles'
 import { Main as Form } from '../form/styles'
 export const Main = styled.div`
   ${({ theme }) => css`
@@ -10,6 +8,15 @@ export const Main = styled.div`
     .container-button {
       flex-direction: column;
       gap: 1.2rem;
+    }
+    .error-message {
+      li {
+        margin-top: 1rem;
+        padding: 0.5rem;
+        background: ${theme.colors.bg[1]};
+        color: ${theme.colors.warning[4]};
+        margin: 10px 0;
+      }
     }
     @media ${theme.media.lMedium} {
       /* ${Form} {

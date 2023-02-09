@@ -3,6 +3,7 @@ import {
   useLazyQuery,
   useMutation,
 } from '@apollo/client'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useWindowSize } from 'usehooks-ts'
 import { Container } from '../../components/Container/container_1'
@@ -30,7 +31,7 @@ const presetErrors = {
 export const Login = () => {
   const [actualErrors, setActualErrors] =
     useState<errorsLogin>(presetErrors)
-
+  const router = useRouter()
   const handleError = (isCreateAccount?: boolean) => {
     return (e: ApolloError | undefined) => {
       if (e?.message)
@@ -66,8 +67,10 @@ export const Login = () => {
     onCompleted: async ({ auth: { token } }) => {
       authVariables.var = { token }
       await me({
-        onCompleted: (user) => {
+        onCompleted: async (user) => {
           authVariables.var = user.me
+          await router.push({ pathname: '/', href: '/' })
+          window.location.reload()
         },
       })
     },
