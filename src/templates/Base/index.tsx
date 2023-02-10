@@ -9,6 +9,8 @@ import { useTheme } from '@emotion/react'
 import { Loading } from '../../components/loading'
 import { navLinkProps } from '../../components/Sidebar/sidebar_0/nav_link'
 import { useRouter } from 'next/router'
+import { useSubscription } from '@apollo/client'
+import { gql_onComment } from '../../graphql/subscriptions/onComment'
 
 export type baseProps = {
   children: ReactNode
@@ -18,6 +20,12 @@ export const Base = ({ children }: baseProps) => {
   const theme = useTheme()
   const router = useRouter()
   const [name, setName] = useState('')
+
+  useSubscription(gql_onComment, {
+    onSubscriptionData({ subscriptionData }) {
+      console.log(subscriptionData.data)
+    },
+  })
 
   useEffect(() => {
     setName(authVariables.var.userName)
