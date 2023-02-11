@@ -6,11 +6,11 @@ import * as S from './styles'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useTheme } from '@emotion/react'
-import { Loading } from '../../components/loading'
 import { navLinkProps } from '../../components/Sidebar/sidebar_0/nav_link'
 import { useRouter } from 'next/router'
 import { useSubscription } from '@apollo/client'
 import { gql_onComment } from '../../graphql/subscriptions/onComment'
+import { Comment } from '../../types/backend'
 
 export type baseProps = {
   children: ReactNode
@@ -21,14 +21,19 @@ export const Base = ({ children }: baseProps) => {
   const router = useRouter()
   const [name, setName] = useState('')
 
-  useSubscription(gql_onComment, {
-    onSubscriptionData({ subscriptionData }) {
-      console.log(subscriptionData.data)
+  useSubscription<{ onCreateComment: Comment }>(gql_onComment, {
+    onData({ data: { data } }) {
+      toast(
+        `Usuário ${data?.onCreateComment.user.userName} comentou em um dos seus post`,
+      )
     },
   })
 
   useEffect(() => {
     setName(authVariables.var.userName)
+    return () => {
+      //
+    }
   }, [])
 
   const handleLogout = async () => {

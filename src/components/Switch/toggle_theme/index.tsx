@@ -10,18 +10,15 @@ export const ToggleTheme = () => {
     return if_window(() => {
       localStorage.setItem('myCat', 'Tom')
       setTheme(check ? 'dark' : 'light')
-      console.log(check)
     })
   }
 
   const currentTheme = (): boolean => {
     return if_window(
       () => {
-        const localTheme =
-          localStorage.getItem('theme')
+        const localTheme = localStorage.getItem('theme')
         if (!localTheme) return false
         const newTheme = JSON.parse(localTheme)
-        console.log(newTheme.name)
         return newTheme.name === 'dark'
       },
       () => false,

@@ -11,7 +11,7 @@ export type Comment = {
   comment: string
   id: string
   user: User
-  createdAt: string
+  created_at: string
 }
 
 export type Post = {

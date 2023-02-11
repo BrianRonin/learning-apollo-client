@@ -9,6 +9,7 @@ import { Heading } from '../../components/Text/heading_0'
 import { Text } from '../../components/Text/text_0'
 import { gql_createComment } from '../../graphql/mutations/createComment'
 import gql_post from '../../graphql/queries/post'
+import { gql_onComment } from '../../graphql/subscriptions/onComment'
 import { Post as tPost } from '../../types/backend'
 import * as S from './styles'
 
@@ -20,6 +21,7 @@ export const Post = () => {
     data,
     loading: PostLoading,
     error,
+    subscribeToMore,
   } = useQuery<{
     post: tPost
   }>(gql_post, {

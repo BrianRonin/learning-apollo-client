@@ -47,7 +47,6 @@ export const Posts = ({ myPosts }: { myPosts?: boolean }) => {
   }
 
   const handleDeletePost = async (postId: string) => {
-    console.log(postId)
     deletePost({
       variables: { id: postId },
       update(cache) {
@@ -70,7 +69,6 @@ export const Posts = ({ myPosts }: { myPosts?: boolean }) => {
   }
 
   const handleLoadMore = async () => {
-    console.log('bottom reached !!')
     if (
       !allLoaded &&
       data?.posts.length &&
@@ -91,7 +89,7 @@ export const Posts = ({ myPosts }: { myPosts?: boolean }) => {
           if (newPosts.posts.length === 0) {
             setAllLoaded(true)
           }
-        }, 1000),
+        }, 0),
       )
     }
   }

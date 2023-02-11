@@ -47,7 +47,6 @@ const PostCard = ({
     index: number,
   ) => {
     const post = posts![index]
-    console.log((e.target as Element).nodeName)
 
     if (
       (e.target as Element).nodeName !== 'svg' &&

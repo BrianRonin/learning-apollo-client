@@ -36,36 +36,18 @@ export const FormLogin = ({
 
   const [email, setEmail] = useState(auth.email)
   const [password, setPassoword] = useState('')
-  const [confirmPassword, setConfirmPassoword] =
+  const [confirmPassword, setConfirmPassoword] = useState('')
+
+  const [userName, setUserName] = useState(auth.userName)
+  const [loading, setLoading] = useState(false)
+  const [isNewUser, setIsNewUser] = useState(false)
+  const [confirmPasswordError, setConfirmPasswordError] =
     useState('')
 
-  const [userName, setUserName] = useState(
-    auth.userName,
-  )
-  const [loading, setLoading] = useState(false)
-  const [isNewUser, setIsNewUser] =
-    useState(false)
-  const [
-    confirmPasswordError,
-    setConfirmPasswordError,
-  ] = useState('')
-
-  useEffect(() => {
-    console.log('auth: ', auth)
-    console.log('message: ', errorMesage)
-  }, [])
-
-  const handleSubmit = async (
-    event: React.FormEvent,
-  ) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-    if (
-      isNewUser &&
-      password !== confirmPassword
-    ) {
-      return setConfirmPasswordError(
-        'senha inválida',
-      )
+    if (isNewUser && password !== confirmPassword) {
+      return setConfirmPasswordError('senha inválida')
     }
     setConfirmPasswordError('')
     setLoading(true)
@@ -138,9 +120,7 @@ export const FormLogin = ({
             <Input
               name='user_passord_'
               label='Confirme sua senha'
-              onChange={(v) =>
-                setConfirmPassoword(v)
-              }
+              onChange={(v) => setConfirmPassoword(v)}
               value={confirmPassword}
               icon={<GiConfirmed />}
               type='password'
@@ -166,19 +146,14 @@ export const FormLogin = ({
                 : 'Entrar'}
             </Button>
           </div>
-          {errorMesage[
-            isNewUser ? 'createAccount' : 'login'
-          ].length > 0 && (
+          {errorMesage[isNewUser ? 'createAccount' : 'login']
+            .length > 0 && (
             <div className='error-message'>
               <ul>
                 {errorMesage[
-                  isNewUser
-                    ? 'createAccount'
-                    : 'login'
+                  isNewUser ? 'createAccount' : 'login'
                 ].map((e, key) => (
-                  <li key={'error-msg-' + key}>
-                    {e}
-                  </li>
+                  <li key={'error-msg-' + key}>{e}</li>
                 ))}
               </ul>
             </div>

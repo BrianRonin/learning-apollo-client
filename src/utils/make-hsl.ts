@@ -30,9 +30,7 @@ const withLimit = (
   newLight = newLight > limit ? limit : newLight
   newLight = newLight < 0 ? 0 : newLight
   return String(
-    Number.isInteger(newLight)
-      ? newLight
-      : newLight.toFixed(2),
+    Number.isInteger(newLight) ? newLight : newLight.toFixed(2),
   )
 }
 
@@ -44,24 +42,17 @@ const getMatrix = (
   const after = current >= 250
   let value
   if (hot) {
-    value = after
-      ? current + increments
-      : current - increments
+    value = after ? current + increments : current - increments
   } else {
-    value = after
-      ? current - increments
-      : current + increments
+    value = after ? current - increments : current + increments
   }
   return String(withLimit(value, 0, 360))
 }
 
 const extractColorValues = (value: string) => {
-  const [_matrix, _saturation, _light, _alpha] =
-    value.split(',')
+  const [_matrix, _saturation, _light, _alpha] = value.split(',')
   const filter = (value: string | undefined) =>
-    Number(
-      value ? value.replace(/[^\d.]/g, '') : '1',
-    )
+    Number(value ? value.replace(/[^\d.]/g, '') : '1')
   return [
     filter(_matrix),
     filter(_saturation),
@@ -70,9 +61,7 @@ const extractColorValues = (value: string) => {
   ]
 }
 
-export const makeHsl = (
-  settings: hslProps,
-): string[] => {
+export const makeHsl = (settings: hslProps): string[] => {
   const template = 'hsl($m, $s, $l, $a)'
   const makeHsl = (
     matrix: string,
@@ -124,10 +113,7 @@ export const makeHsl = (
       'você deve enviar um numero impar em "length"',
     )
 
-  const resolveColor = (
-    i: number,
-    before: boolean,
-  ) => {
+  const resolveColor = (i: number, before: boolean) => {
     const numberValues = () => {
       const matrix = Number(currentMatrix)
       const light = Number(currentLight)
@@ -136,8 +122,7 @@ export const makeHsl = (
       return { matrix, light, saturation, alpha }
     }
 
-    const { alpha, matrix, light, saturation } =
-      numberValues()
+    const { alpha, matrix, light, saturation } = numberValues()
 
     const context = (e: boolean) => {
       const hanldeBefore = before ? e : !e
@@ -202,11 +187,7 @@ export const makeHsl = (
       currentSaturation = String(colorValues[1])
       currentLight = String(colorValues[2])
       currentAlpha = String(colorValues[3])
-      for (
-        let i = halfLength + 1;
-        i <= halfLength * 2;
-        i++
-      ) {
+      for (let i = halfLength + 1; i <= halfLength * 2; i++) {
         resolveColor(i, false)
       }
       break
@@ -217,19 +198,8 @@ export const makeHsl = (
       }
       break
     default:
-      console.log(
-        'você precisa escolher uma direção',
-      )
+      console.log('você precisa escolher uma direção')
       break
   }
   return resolve
 }
-console.log(
-  makeHsl({
-    color: 'hsl(0, 0%, 100%)',
-    length: 5,
-    position: 'start',
-    incLight: 20,
-    orderLight: false,
-  }),
-)
